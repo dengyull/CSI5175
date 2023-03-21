@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CSI5175</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Shopping Cart</string>
+    <string name="title_notifications">Account</string>
 </resources>
