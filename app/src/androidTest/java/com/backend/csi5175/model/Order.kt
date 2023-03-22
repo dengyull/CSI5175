@@ -5,13 +5,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
 
-@Entity
+@Entity(tableName = "order_table")
 data class Order (
     @PrimaryKey
     @ColumnInfo
     var oid: Int,
     @ColumnInfo
-    var user: User,
+    var uid: Int,
     @ColumnInfo("date_time")
     var dateTime: Date,
     @ColumnInfo

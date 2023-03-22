@@ -10,10 +10,12 @@ import androidx.room.PrimaryKey
     entity = Merchant::class,
     childColumns = ["mid"],
     parentColumns = ["mid"]
-)])
+)], tableName = "product")
 data class Product (
-    @PrimaryKey val pid: Int,
+    @PrimaryKey
     @ColumnInfo
+    var pid: Int,
+    @ColumnInfo(index = true)
     var mid: Int,
     @ColumnInfo(name = "product_name")
     var pname: String,

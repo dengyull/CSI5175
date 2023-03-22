@@ -4,9 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "user")
 data class User (
     @PrimaryKey
+    @ColumnInfo
     var uid: Int,
     @ColumnInfo
     var email: String,

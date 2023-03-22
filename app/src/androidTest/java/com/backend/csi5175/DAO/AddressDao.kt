@@ -9,14 +9,14 @@ import com.backend.csi5175.model.Address
 @Dao
 interface AddressDao {
 
-    @Query("SELECT * FROM Address")
+    @Query("SELECT * FROM address")
     fun getAllAddress(): List<Address>
 
-    @Query("SELECT * FROM Address WHERE zipcode LIKE :zipcode LIMIT 1")
+    @Query("SELECT * FROM address WHERE zipcode = :zipcode LIMIT 1")
     fun findByZipcode(zipcode: String): Address
 
-    @Query("SELECT * FROM Address WHERE zipcode LIKE :zipcode AND country LIKE :country LIMIT 1")
-    fun findByCountryAndZipcode(zipcode: String): Address
+    @Query("SELECT * FROM address WHERE zipcode = :zipcode AND country = :country LIMIT 1")
+    fun findByCountryAndZipcode(zipcode: String, country: String): Address
 
     @Insert
     fun insertAll(vararg addresses: Address)
