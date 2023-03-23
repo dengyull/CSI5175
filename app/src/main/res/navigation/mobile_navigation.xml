@@ -22,4 +22,9 @@
         android:name="com.example.csi5175.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_browse"
+        android:name="com.example.csi5175.browse"
+        android:label="fragment_browse"
+        tools:layout="@layout/fragment_browse" />
 </navigation>
