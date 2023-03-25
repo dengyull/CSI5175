@@ -9,7 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.csi5175.databinding.ActivityOrderhistoryBinding
 
-class orderhistory : AppCompatActivity() {
+class OrderHistory : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityOrderhistoryBinding
