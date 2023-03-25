@@ -1,10 +1,12 @@
 package com.example.csi5175
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.csi5175.databinding.FragmentBrowseBinding
@@ -51,6 +53,20 @@ class browse : Fragment() {
         browseViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+        val imageCategory = root.findViewById<ImageView>(R.id.imageCategory)
+        val textCategory = root.findViewById<TextView>(R.id.textCategory)
+
+        imageCategory.setOnClickListener {
+            // Open new activity when imageCategory is clicked
+
+        }
+
+        textCategory.setOnClickListener {
+            // Open new activity when textCategory is clicked
+
+        }
+
 
 
         return root
