@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.example.csi5175.databinding.FragmentSecondBinding
+import com.example.csi5175.databinding.FragmentOrderhistorysecondBinding
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class OrderHistorySecondFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentOrderhistorysecondBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,7 +24,7 @@ class OrderHistorySecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentOrderhistorysecondBinding.inflate(inflater, container, false)
         return binding.root
 
     }
