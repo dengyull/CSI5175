@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -49,13 +50,20 @@ class browse : Fragment() {
         _binding = FragmentBrowseBinding.inflate(inflater,container,false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textbrowse
+        /*val textView: TextView = binding.textbrowse
         browseViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
-        }
-
+        }*/
+        val searchBar = root.findViewById<EditText>(R.id.search_bar)
+        val searchIcon = root.findViewById<ImageView>(R.id.search_icon)
         val imageCategory = root.findViewById<ImageView>(R.id.imageCategory)
         val textCategory = root.findViewById<TextView>(R.id.textCategory)
+
+        // Set up the search listener
+        searchIcon.setOnClickListener {
+            val searchTerm = searchBar.text.toString()
+            // Perform the search
+        }
 
         imageCategory.setOnClickListener {
             // Open new activity when imageCategory is clicked
