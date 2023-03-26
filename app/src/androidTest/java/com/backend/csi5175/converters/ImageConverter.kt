@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken
 
 class ImageConverter {
     @TypeConverter
-    fun imageToString(value: Image): String {
+    fun imageToString(value: Image?): String {
         val gson = Gson()
         return gson.toJson(value)
     }

@@ -1,10 +1,8 @@
 package com.backend.csi5175.DAO
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.backend.csi5175.model.Merchant
+import com.backend.csi5175.model.Order
 
 @Dao
 interface MerchantDao {
@@ -14,9 +12,12 @@ interface MerchantDao {
     @Query("SELECT * FROM merchant WHERE mid = :mid LIMIT 1")
     fun findMerchantById(mid: Int): Merchant
 
+    @Update
+    fun updateMerchantInfo(merchant: Merchant)
+
     @Insert
     fun insertAll(vararg merchants: Merchant)
 
-    @Delete
-    fun delete(merchant: Merchant)
+    @Query("DELETE FROM merchant where mid = :mid")
+    fun delete(mid: Int)
 }

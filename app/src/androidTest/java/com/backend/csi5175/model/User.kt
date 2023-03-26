@@ -22,9 +22,9 @@ data class User (
     @ColumnInfo
     var address: Address,
     @ColumnInfo
-    var history: List<Order>,
+    var history: List<Order>?,
     @ColumnInfo
-    var favorite: List<Product>,
+    var favorite: List<Product>?,
     @ColumnInfo
-    var cart: List<Product>,
+    var cart: List<Product>?,
 )

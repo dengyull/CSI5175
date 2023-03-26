@@ -8,12 +8,15 @@ interface OrderDao {
     @Query("SELECT * FROM order_table WHERE oid = :oid LIMIT 1")
     fun findOrderByOid(oid: Int): Order
 
+    @Query("SELECT * FROM order_table")
+    fun getAllOrders(): List<Order>
+
     @Update
     fun updateOrder(order: Order)
 
     @Insert
     fun insert(vararg orders: Order)
 
-    @Delete
-    fun delete(order: Order)
+    @Query("DELETE FROM order_table WHERE oid = :oid")
+    fun delete(oid: Int)
 }

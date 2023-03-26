@@ -24,7 +24,7 @@ data class Product (
     @ColumnInfo
     var description: String,
     @ColumnInfo
-    var image: Image,
+    var image: Image?,
     @ColumnInfo
     var category: String,
     @ColumnInfo
