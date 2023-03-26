@@ -8,10 +8,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="browse">Browse</string>
     <string name="title_activity_orderhistory">orderhistory</string>
+    <string name="register">Register</string>
 
-    <string name="login_email_label">E-mail: </string>
-    <string name="login_password_label">Password: </string>
+    <string name="email_label">E-mail: </string>
+    <string name="password_label">Password: </string>
+    <string name="name_label">Name: </string>
     <string name="login_welcome">Welcome! Please login!</string>
+    <string name="register_welcome">Welcome to register!</string>
+    <string name="repeat_password">Repeat password: </string>
 
     <string name="order_history">History Orders: </string>
     <string name="hello_order_history">Welcome. Do you want to check your history order?</string>
@@ -24,7 +28,6 @@
     <string name="confirm">Confirm</string>
     <string name="check">Check</string>
     <string name="back">Back</string>
-
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
