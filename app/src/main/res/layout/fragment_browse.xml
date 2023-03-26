@@ -8,11 +8,7 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:id="@+id/textbrowse"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,46 +38,51 @@
 
         </LinearLayout>
 
-        <androidx.gridlayout.widget.GridLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="947dp">
 
-        <!-- card for each category-->
-            <androidx.cardview.widget.CardView
-                android:layout_width="201dp"
-                android:layout_height="204dp"
-                app:layout_column="0"
-                app:layout_row="0">
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                <!-- card for each category-->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="201dp"
+                    android:layout_height="204dp"
+                    app:layout_column="0"
+                    app:layout_row="0">
 
-                    <ImageView
-                        android:id="@+id/imageCategory"
-                        android:layout_width="199dp"
-                        android:layout_height="152dp"
-                        android:src="@drawable/pizza" />
-
-                    <View
-                        android:id="@+id/divider"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="5dp"
-                        android:background="?android:attr/listDivider" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textCategory"
-                        android:layout_width="195dp"
-                        android:layout_height="42dp"
-                        android:gravity="center"
-                        android:text="Pizza"
-                        android:textSize="24sp" />
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/imageCategory"
+                            android:layout_width="199dp"
+                            android:layout_height="152dp"
+                            android:src="@drawable/pizza" />
 
-            </androidx.cardview.widget.CardView>
+                        <View
+                            android:id="@+id/divider"
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:background="?android:attr/listDivider" />
 
-        </androidx.gridlayout.widget.GridLayout>
+                        <TextView
+                            android:id="@+id/textCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:gravity="center"
+                            android:text="Pizza"
+                            android:textSize="24sp" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.gridlayout.widget.GridLayout>
+        </ScrollView>
 
     </LinearLayout>
 
