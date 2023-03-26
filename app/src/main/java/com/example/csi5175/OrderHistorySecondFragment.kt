@@ -32,7 +32,10 @@ class OrderHistorySecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.historyOrders   //The recylerView.
+        binding.historyOrders   //The scrollView.
+        binding.historyOrdersLayout //The layout in scrollView
+                                    //when try to show the order history, add the data into this layout.
+                                    //there is some textview in it for test, remember to delete.
 
         binding.orderHistorySecondBack.setOnClickListener { //Used to back the first fragment "Back"
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
