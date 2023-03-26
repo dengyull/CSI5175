@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.csi5175.R
 import com.example.csi5175.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -28,9 +32,38 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
+        /*val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
+        }*/
+    // Find views by their IDs
+        val orderHistoryButton =root.findViewById<Button>(R.id.button_orderhistory)
+        val restaurantTitleTextView = root.findViewById<TextView>(R.id.restaurant_title)
+        val priceTextView = root.findViewById<TextView>(R.id.price)
+        val cartCardView = root.findViewById<CardView>(R.id.cart_card)
+        val detailsRestaurantTitle = root.findViewById<TextView>(R.id.details_restaurant_title)
+        val detailsFood = root.findViewById<TextView>(R.id.details_food)
+        val totalPrice = root.findViewById<TextView>(R.id.Total_price)
+        val checkoutButton = root.findViewById<Button>(R.id.button_checkout)
+
+        val showdetails_button = root.findViewById<ImageView>(R.id.showdetails_button)
+        val details_card = root.findViewById<CardView>(R.id.details_card)
+        showdetails_button.setOnClickListener {
+            // 将details_card设置为可见
+            details_card.visibility = View.VISIBLE
+            detailsRestaurantTitle.text = restaurantTitleTextView.text
+            // Set detailsFood text
+            detailsFood.text = "Food details here!"
+            // Set totalPrice text
+            totalPrice.text = priceTextView.text
+        }
+        // Set onClickListener for orderHistoryButton
+        orderHistoryButton.setOnClickListener {
+            // Handle button click
+        }
+        // Set onClickListener for checkoutButton
+        checkoutButton.setOnClickListener {
+            // Handle button click
         }
         return root
     }
