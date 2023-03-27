@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/modify_navigation"
+    app:startDestination="@+id/navigation_notifications">
+
+    <fragment
+        android:id="@+id/navigation_modify"
+        android:name="com.example.csi5175.ui.notifications.modify.ModifyFragment"
+        android:label="modify"
+        tools:layout="@layout/fragment_modify">
+
+        <action
+            android:id="@+id/action_info_to_namechange"
+            app:destination="@id/navigation_namechange" />
+
+        <action
+            android:id="@+id/action_info_to_emailchange"
+            app:destination="@id/navigation_emailchange" />
+
+        <action
+            android:id="@+id/action_info_to_phonechange"
+            app:destination="@id/navigation_phonechange" />
+
+        <action
+            android:id="@+id/action_info_to_addresschange"
+            app:destination="@id/navigation_addresschange" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_namechange"
+        android:name="com.example.csi5175.ui.notifications.modify.NameChangeFragment"
+        android:label="namechange"
+        tools:layout="@layout/fragment_namechange" >
+
+        <action
+            android:id="@+id/action_namechange_to_info"
+            app:destination="@id/navigation_modify" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_addresschange"
+        android:name="com.example.csi5175.ui.notifications.modify.AddressChangeFragment"
+        android:label="addresschange"
+        tools:layout="@layout/fragment_addresschange" >
+
+        <action
+            android:id="@+id/action_addresschange_to_info"
+            app:destination="@id/navigation_modify" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_phonechange"
+        android:name="com.example.csi5175.ui.notifications.modify.PhoneChangeFragment"
+        android:label="phonechange"
+        tools:layout="@layout/fragment_phonechange" >
+
+        <action
+            android:id="@+id/action_phonechange_to_info"
+            app:destination="@id/navigation_modify" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_emailchange"
+        android:name="com.example.csi5175.ui.notifications.modify.EmailChangeFragment"
+        android:label="emailchange"
+        tools:layout="@layout/fragment_emailchange" >
+
+        <action
+            android:id="@+id/action_emailchange_to_info"
+            app:destination="@id/navigation_modify" />
+
+
+    </fragment>
+
+</navigation>
