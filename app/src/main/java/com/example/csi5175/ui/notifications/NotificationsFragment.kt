@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -40,27 +41,8 @@ class NotificationsFragment : Fragment() {
             textView.text = it
         }
 
-        val navView : NavigationView = binding.userNavView
-
-        val navController = findNavController()
-
-        val config = AppBarConfiguration(
-            setOf(
-                R.id.navigation_namechange, R.id.navigation_emailchange, R.id.navigation_phonechange, R.id.navigation_addresschange
-            )
-        )
-
         binding.userOrderHistory.setOnClickListener {
-            val intent = Intent(this, OrderHistory::class.java)
-            startActivity(intent)
         }
-
-
-        binding.userAddress.setOnClickListener {
-            findNavController().navigate(R.id.modify_navigation)
-        }
-
-
 
         return root
     }

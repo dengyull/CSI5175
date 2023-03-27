@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.csi5175.R
 import com.example.csi5175.databinding.FragmentAddresschangeBinding
 import com.example.csi5175.databinding.FragmentNamechangeBinding
@@ -30,6 +31,7 @@ class NameChangeFragment : Fragment() {
 
         binding.nameChangeConfirm.setOnClickListener {
             binding.nameChangeInput
+            findNavController().navigate(R.id.action_namechange_to_info)
         }
 
         return binding.root

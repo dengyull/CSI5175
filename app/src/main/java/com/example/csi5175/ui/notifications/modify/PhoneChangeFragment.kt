@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.csi5175.R
 import com.example.csi5175.databinding.FragmentAddresschangeBinding
 import com.example.csi5175.databinding.FragmentPhonechangeBinding
@@ -29,6 +30,7 @@ class PhoneChangeFragment : Fragment() {
 
         binding.phoneChangeConfirm.setOnClickListener {
             binding.phoneChangeInput
+            findNavController().navigate(R.id.action_phonechange_to_info)
         }
 
         return binding.root
