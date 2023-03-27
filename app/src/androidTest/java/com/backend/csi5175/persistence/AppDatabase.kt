@@ -13,7 +13,7 @@ import com.backend.csi5175.model.*
     entities = [Address::class, Merchant::class, Order::class, Product::class, User::class],
     version = 1,
     exportSchema = false)
-@TypeConverters(DateConverter::class, ProductConverter::class, ImageConverter::class, OrderConverter::class, AddressConverter::class)
+@TypeConverters(DateConverter::class, ProductConverter::class, ImageConverter::class, OrderConverter::class, AddressConverter::class, ListOfDoubleConverter::class, ListOfStringConverter::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun userDao() : UserDao
     abstract fun addressDao(): AddressDao

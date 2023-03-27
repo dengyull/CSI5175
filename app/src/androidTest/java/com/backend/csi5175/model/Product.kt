@@ -29,4 +29,8 @@ data class Product (
     var category: String,
     @ColumnInfo
     var quantity: Int,
+    @ColumnInfo
+    var calories: List<Double>?,
+    @ColumnInfo
+    var label: List<String>?
 )

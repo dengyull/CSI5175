@@ -13,7 +13,7 @@ class ImageConverter {
     }
 
     @TypeConverter
-    fun stringToImage(value: String): Image {
+    fun stringToImage(value: String): Image? {
         val type = object : TypeToken<Image>(){}.type
         return Gson().fromJson(value, type)
     }
