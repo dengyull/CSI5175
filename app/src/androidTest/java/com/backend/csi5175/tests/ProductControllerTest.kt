@@ -39,6 +39,16 @@ class ProductControllerTest {
     }
 
     @Test
+    fun testFindAllProductsByMerchant() {
+        val product1 = productDao.findAllProductsByMerchant(1)
+        val product2 = productDao.findAllProductsByMerchant(2)
+        Assert.assertEquals(product1.size, 1)
+        Assert.assertEquals(product2.size, 1)
+        Assert.assertEquals(product1.first().pid, 12)
+        Assert.assertEquals(product2.first().pid, 34)
+    }
+
+    @Test
     fun testUpdate() {
         productDao.updateProduct(Product(pid = 12, mid = 1, image = null, pname = "wallet", description = "good wallet", category = "personal item", quantity = 20, price = 43123.1))
         Assert.assertEquals(productDao.findProductByPid(12).pname, "wallet")

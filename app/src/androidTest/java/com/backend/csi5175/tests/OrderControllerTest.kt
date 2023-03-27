@@ -48,8 +48,18 @@ class OrderControllerTest {
 
     @Test
     fun testFindOrderByOid() {
-        Assert.assertEquals(orderDao.findOrderByOid(12345).uid, 0)
+        Assert.assertEquals(orderDao.findOrderByOid(12354).uid, 0)
         Assert.assertEquals(orderDao.findOrderByOid(54355).uid, 1)
+    }
+
+    @Test
+    fun testFindAllOrdersByUser() {
+        val order1 = orderDao.findAllOrdersByUser(0)
+        val order2 = orderDao.findAllOrdersByUser(1)
+        Assert.assertEquals(order1.size, 1)
+        Assert.assertEquals(order2.size, 1)
+        Assert.assertEquals(order1.first().oid, 12354)
+        Assert.assertEquals(order2.first().oid, 54355)
     }
 
     @Test

@@ -14,6 +14,9 @@ interface ProductDao {
     @Query("SELECT * FROM product")
     fun getAllProduct(): List<Product>
 
+    @Query("SELECT * FROM product WHERE mid = :mid")
+    fun findAllProductsByMerchant(mid: Int): List<Product>
+
     @Update
     fun updateProduct(product: Product)
 
