@@ -1,14 +1,20 @@
 package com.example.csi5175.ui.notifications
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import com.example.csi5175.OrderHistory
+import com.example.csi5175.R
 import com.example.csi5175.databinding.FragmentNotificationsBinding
+import com.google.android.material.navigation.NavigationView
 
 class NotificationsFragment : Fragment() {
 
@@ -29,53 +35,32 @@ class NotificationsFragment : Fragment() {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        //These 4 input area is used to modify the personal info.
-        //So at the beginning it will be invisible
-        binding.userNameModify.isVisible = false
-        binding.userEmailModify.isVisible = false
-        binding.userAddressModify.isVisible = false
-        binding.userPhoneModify.isVisible = false
-        binding.userChangeConfirm.isVisible = false
-
         val textView: TextView = binding.textNotifications
         notificationsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
 
-        binding.userChangeButton.setOnClickListener {
+        val navView : NavigationView = binding.userNavView
 
-            binding.userNameModify.isVisible = true
-            binding.userEmailModify.isVisible = true
-            binding.userAddressModify.isVisible = true
-            binding.userPhoneModify.isVisible = true
-            binding.userChangeConfirm.isVisible = true
+        val navController = findNavController()
 
-            binding.userName.isVisible = false
-            binding.userPhone.isVisible = false
-            binding.userAddress.isVisible = false
-            binding.userEmail.isVisible = false
-            binding.userChangeButton.isVisible = false
+        val config = AppBarConfiguration(
+            setOf(
+                R.id.navigation_namechange, R.id.navigation_emailchange, R.id.navigation_phonechange, R.id.navigation_addresschange
+            )
+        )
 
-            //some functions here.
+        binding.userOrderHistory.setOnClickListener {
+            val intent = Intent(this, OrderHistory::class.java)
+            startActivity(intent)
         }
 
-        binding.userChangeConfirm.setOnClickListener {
 
-            binding.userNameModify.isVisible = false
-            binding.userEmailModify.isVisible = false
-            binding.userAddressModify.isVisible = false
-            binding.userPhoneModify.isVisible = false
-            binding.userChangeConfirm.isVisible = false
-
-            binding.userName.isVisible = true
-            binding.userPhone.isVisible = true
-            binding.userAddress.isVisible = true
-            binding.userEmail.isVisible = true
-            binding.userChangeButton.isVisible = true
-
-
-            //show the info textview again.
+        binding.userAddress.setOnClickListener {
+            findNavController().navigate(R.id.modify_navigation)
         }
+
+
 
         return root
     }
