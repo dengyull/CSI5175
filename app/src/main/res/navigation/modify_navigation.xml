@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/modify_navigation"
+    app:startDestination="@+id/navigation_notifications">
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.csi5175.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_namechange"
+        android:name="com.example.csi5175.ui.notifications.modify.NameChangeFragment"
+        android:label="namechange"
+        tools:layout="@layout/fragment_namechange" />
+
+    <fragment
+        android:id="@+id/navigation_addresschange"
+        android:name="com.example.csi5175.ui.notifications.modify.AddressChangeFragment"
+        android:label="addresschange"
+        tools:layout="@layout/fragment_addresschange" />
+
+    <fragment
+        android:id="@+id/navigation_phonechange"
+        android:name="com.example.csi5175.ui.notifications.modify.PhoneChangeFragment"
+        android:label="phonechange"
+        tools:layout="@layout/fragment_phonechange" />
+
+    <fragment
+        android:id="@+id/navigation_emailchange"
+        android:name="com.example.csi5175.ui.notifications.modify.EmailChangeFragment"
+        android:label="emailchange"
+        tools:layout="@layout/fragment_emailchange" />
+
+</navigation>
