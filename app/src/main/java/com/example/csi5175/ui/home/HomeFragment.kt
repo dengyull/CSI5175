@@ -70,6 +70,8 @@ class HomeFragment : Fragment() {
 // Find views
         val popularCard = root.findViewById<CardView>(R.id.popular_card)
         val RecyclerViewpopular = root.findViewById<RecyclerView>(R.id.RecyclerView_popular)
+        val RecyclerViewfeatured = root.findViewById<RecyclerView>(R.id.RecyclerView_featured)
+
         val featuredCard = root.findViewById<CardView>(R.id.featured_card)
         val featuredCuisinesImage = root.findViewById<ImageView>(R.id.featured_cuisines_image)
         val featuredCuisinesName = root.findViewById<TextView>(R.id.featured_cuisines_name)
@@ -79,6 +81,11 @@ class HomeFragment : Fragment() {
         val myDataset:List<Product> =  listOf()//Todo: favourlist
         val adapter = productAdapter(myDataset)
         RecyclerViewpopular.adapter = adapter
+
+        RecyclerViewfeatured.layoutManager = LinearLayoutManager(requireContext())
+        val myDatasetfeatured:List<Product> =  listOf()//Todo: featuredlist
+        val adapterfeatured = productAdapter(myDatasetfeatured)
+        RecyclerViewpopular.adapter = adapterfeatured
 
         // Set click listeners
         popularCard.setOnClickListener {
