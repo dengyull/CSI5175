@@ -30,8 +30,9 @@
         android:id="@+id/user_nav_view"
         android:layout_width="409dp"
         android:layout_height="358dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="16dp">
+        app:layout_constraintBottom_toTopOf="@+id/text_notifications"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,7 +86,9 @@
         android:layout_width="179dp"
         android:layout_height="57dp"
         android:text="order history"
-        tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="403dp" />
+        app:layout_constraintBottom_toTopOf="@+id/text_notifications"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_nav_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

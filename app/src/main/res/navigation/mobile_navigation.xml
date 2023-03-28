@@ -27,4 +27,9 @@
         android:name="com.example.csi5175.browse"
         android:label="fragment_browse"
         tools:layout="@layout/fragment_browse" />
+    <fragment
+        android:id="@+id/navhomelist"
+        android:name="com.example.csi5175.navhomelist"
+        android:label="fragment_navhomelist"
+        tools:layout="@layout/fragment_navhomelist" />
 </navigation>

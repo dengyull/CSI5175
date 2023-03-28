@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -38,6 +39,7 @@ class MainActivity2 : AppCompatActivity() {
 
 
         button = findViewById(R.id.button2)
+        button.isVisible = false
         button.setOnClickListener {
             finish()
         }

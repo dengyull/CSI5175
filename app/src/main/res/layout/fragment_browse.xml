@@ -1,15 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".browse">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textbrowse"
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <!-- Top Navigation Bar -->
+        <LinearLayout
+            android:id="@+id/top_navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <!-- Search Bar -->
+            <EditText
+                android:id="@+id/search_bar"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:hint="Search for food or restaurants" />
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="45dp"
+                android:layout_height="56dp"
+                android:src="@drawable/search_icon" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="571dp">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- card for each category-->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="201dp"
+                    android:layout_height="204dp"
+                    app:layout_column="0"
+                    app:layout_row="0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageCategory"
+                            android:layout_width="199dp"
+                            android:layout_height="152dp"
+                            android:src="@drawable/pizza" />
+
+                        <View
+                            android:id="@+id/divider"
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:background="?android:attr/listDivider" />
+
+                        <TextView
+                            android:id="@+id/textCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:gravity="center"
+                            android:text="Pizza"
+                            android:textSize="24sp" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.gridlayout.widget.GridLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+
+
 
 </FrameLayout>
