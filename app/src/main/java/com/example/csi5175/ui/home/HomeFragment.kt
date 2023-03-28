@@ -17,10 +17,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.csi5175.Product
 import com.example.csi5175.R
 import com.example.csi5175.databinding.FragmentHomeBinding
-import com.example.csi5175.model.Product
-import com.example.csi5175.persistence.AppDatabase
 import com.example.csi5175.productAdapter
 
 class HomeFragment : Fragment() {
@@ -73,8 +72,6 @@ class HomeFragment : Fragment() {
         val RecyclerViewfeatured = root.findViewById<RecyclerView>(R.id.RecyclerView_featured)
 
         val featuredCard = root.findViewById<CardView>(R.id.featured_card)
-        val featuredCuisinesImage = root.findViewById<ImageView>(R.id.featured_cuisines_image)
-        val featuredCuisinesName = root.findViewById<TextView>(R.id.featured_cuisines_name)
 
 
         RecyclerViewpopular.layoutManager = LinearLayoutManager(requireContext())

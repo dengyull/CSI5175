@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.csi5175.model.Product
 
 class productAdapter(private val myDataset: List<Product>) : RecyclerView.Adapter<productAdapter.MyViewHolder>() {
 
