@@ -1,13 +1,13 @@
-package com.backend.csi5175.persistence
+package com.example.csi5175.backend.persistence
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.backend.csi5175.DAO.*
-import com.backend.csi5175.converters.*
-import com.backend.csi5175.model.*
+import com.example.csi5175.backend.converter.*
+import com.example.csi5175.backend.dao.*
+import com.example.csi5175.backend.model.*
 
 @Database(
     entities = [Address::class, Merchant::class, Order::class, Product::class, User::class],

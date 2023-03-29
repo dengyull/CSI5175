@@ -1,8 +1,7 @@
-package com.backend.csi5175.DAO
+package com.example.csi5175.backend.dao
 
 import androidx.room.*
-import com.backend.csi5175.model.Merchant
-import com.backend.csi5175.model.Order
+import com.example.csi5175.backend.model.Merchant
 
 @Dao
 interface MerchantDao {

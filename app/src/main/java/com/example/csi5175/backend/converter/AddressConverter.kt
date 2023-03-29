@@ -1,8 +1,7 @@
-package com.backend.csi5175.converters
+package com.example.csi5175.backend.converter
 
 import androidx.room.TypeConverter
-import com.backend.csi5175.model.Address
-import com.backend.csi5175.model.User
+import com.example.csi5175.backend.model.Address
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

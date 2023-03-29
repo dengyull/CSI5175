@@ -1,10 +1,12 @@
-package com.backend.csi5175.tests
+package com.example.csi5175.backend
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.backend.csi5175.DAO.UserDao
-import com.backend.csi5175.model.*
-import com.backend.csi5175.persistence.AppDatabase
+import com.example.csi5175.backend.dao.UserDao
+import com.example.csi5175.backend.model.*
+import com.example.csi5175.backend.model.Address
+import com.example.csi5175.backend.model.User
+import com.example.csi5175.backend.persistence.AppDatabase
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -56,7 +58,8 @@ class UserControllerTest {
     fun testUpdateUserInfo() {
         val address1 = Address(country = "USA", state = "CA", zipcode = "97123", city = "San Jose", street = "312 El Camino Ave")
         userDao.updateUserInfo(
-            User(uid = 1, email = "123@gmail.com", password = "123", firstName = "uz", lastName = "aa", phone = 123123, address = address1, history = null, favorite = null, cart = null))
+            User(uid = 1, email = "123@gmail.com", password = "123", firstName = "uz", lastName = "aa", phone = 123123, address = address1, history = null, favorite = null, cart = null)
+        )
         Assert.assertEquals(userDao.findUserByUid(1).address.state, "CA")
     }
 

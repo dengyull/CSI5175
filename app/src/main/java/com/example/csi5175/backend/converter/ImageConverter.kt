@@ -1,4 +1,4 @@
-package com.backend.csi5175.converters
+package com.example.csi5175.backend.converter
 
 import android.media.Image
 import androidx.room.TypeConverter
