@@ -1,10 +1,9 @@
-package com.backend.csi5175.converters
+package com.example.csi5175.backend.converter
 
 import androidx.room.TypeConverter
-import com.backend.csi5175.model.Product
+import com.example.csi5175.backend.model.Product
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ProductConverter {

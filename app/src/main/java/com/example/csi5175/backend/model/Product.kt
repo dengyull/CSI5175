@@ -1,4 +1,4 @@
-package com.backend.csi5175.model
+package com.example.csi5175.backend.model
 
 import android.media.Image
 import androidx.room.ColumnInfo

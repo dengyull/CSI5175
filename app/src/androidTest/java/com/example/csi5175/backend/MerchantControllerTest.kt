@@ -1,12 +1,12 @@
-package com.backend.csi5175.tests
+package com.example.csi5175.backend
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.backend.csi5175.DAO.MerchantDao
-import com.backend.csi5175.model.Address
-import com.backend.csi5175.model.Merchant
-import com.backend.csi5175.model.Product
-import com.backend.csi5175.persistence.AppDatabase
+import com.example.csi5175.backend.dao.MerchantDao
+import com.example.csi5175.backend.model.Address
+import com.example.csi5175.backend.model.Merchant
+import com.example.csi5175.backend.model.Product
+import com.example.csi5175.backend.persistence.AppDatabase
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
