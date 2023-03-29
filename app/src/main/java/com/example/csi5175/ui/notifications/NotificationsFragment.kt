@@ -41,6 +41,28 @@ class NotificationsFragment : Fragment() {
             textView.text = it
         }
 
+        binding.nameChangeButton.setOnClickListener {
+            findNavController().navigate(R.id.action_info_to_namechange)
+        }
+
+        binding.emailChangeButton.setOnClickListener {
+            findNavController().navigate(R.id.action_info_to_emailchange)
+        }
+
+        binding.phoneChangeButton.setOnClickListener {
+            findNavController().navigate(R.id.action_info_to_phonechange)
+        }
+
+        binding.addressChangeButton.setOnClickListener {
+            findNavController().navigate(R.id.action_info_to_addresschange)
+        }
+
+        //These four textView is for the user info
+        binding.userName
+        binding.userAddress
+        binding.userEmail
+        binding.userPhone
+
         binding.userOrderHistory.setOnClickListener {
         }
 

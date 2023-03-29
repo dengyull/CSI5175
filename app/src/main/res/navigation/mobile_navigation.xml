@@ -18,18 +18,87 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.csi5175.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
         android:id="@+id/navigation_browse"
         android:name="com.example.csi5175.browse"
         android:label="fragment_browse"
         tools:layout="@layout/fragment_browse" />
+
     <fragment
         android:id="@+id/navhomelist"
         android:name="com.example.csi5175.navhomelist"
         android:label="fragment_navhomelist"
         tools:layout="@layout/fragment_navhomelist" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.csi5175.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" >
+
+        <action
+            android:id="@+id/action_info_to_namechange"
+            app:destination="@id/navigation_namechange" />
+
+        <action
+            android:id="@+id/action_info_to_emailchange"
+            app:destination="@id/navigation_emailchange" />
+
+        <action
+            android:id="@+id/action_info_to_phonechange"
+            app:destination="@id/navigation_phonechange" />
+
+        <action
+            android:id="@+id/action_info_to_addresschange"
+            app:destination="@id/navigation_addresschange" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_namechange"
+        android:name="com.example.csi5175.ui.notifications.modify.NameChangeFragment"
+        android:label="Change your name"
+        tools:layout="@layout/fragment_namechange" >
+
+        <action
+            android:id="@+id/action_namechange_to_info"
+            app:destination="@id/navigation_notifications" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_addresschange"
+        android:name="com.example.csi5175.ui.notifications.modify.AddressChangeFragment"
+        android:label="Change your address"
+        tools:layout="@layout/fragment_addresschange" >
+
+        <action
+            android:id="@+id/action_addresschange_to_info"
+            app:destination="@id/navigation_notifications" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_phonechange"
+        android:name="com.example.csi5175.ui.notifications.modify.PhoneChangeFragment"
+        android:label="Change your phone"
+        tools:layout="@layout/fragment_phonechange" >
+
+        <action
+            android:id="@+id/action_phonechange_to_info"
+            app:destination="@id/navigation_notifications" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_emailchange"
+        android:name="com.example.csi5175.ui.notifications.modify.EmailChangeFragment"
+        android:label="Change your email"
+        tools:layout="@layout/fragment_emailchange" >
+
+        <action
+            android:id="@+id/action_emailchange_to_info"
+            app:destination="@id/navigation_notifications" />
+
+
+    </fragment>
+
 </navigation>
