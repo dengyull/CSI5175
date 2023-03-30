@@ -1,7 +1,12 @@
 package com.example.csi5175
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +14,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.csi5175.backend.model.Product
+import com.example.csi5175.backend.persistence.AppDatabase
 import com.example.csi5175.databinding.FragmentBrowseBinding
 import com.example.csi5175.databinding.FragmentHomeBinding
 import com.example.csi5175.databinding.FragmentNotificationsBinding
@@ -56,8 +66,15 @@ class browse : Fragment() {
         }*/
         val searchBar = root.findViewById<EditText>(R.id.search_bar)
         val searchIcon = root.findViewById<ImageView>(R.id.search_icon)
-        val imageCategory = root.findViewById<ImageView>(R.id.imageCategory)
-        val textCategory = root.findViewById<TextView>(R.id.textCategory)
+        val RecyclerViewtotal = root.findViewById<RecyclerView>(R.id.RecyclerView_total)
+        val db = context?.let { AppDatabase.getAppDatabase(it) }
+
+
+        RecyclerViewtotal.layoutManager = LinearLayoutManager(requireContext())
+        val myDataset:List<Product> = db?.productDao()?.getAllProduct() ?: listOf()//Todo: favourlist
+        Log.v("database", myDataset.toString())
+        val adapter = productAdapter(myDataset)
+        RecyclerViewtotal.adapter = adapter
 
         // Set up the search listener
         searchIcon.setOnClickListener {
@@ -65,21 +82,58 @@ class browse : Fragment() {
             // Perform the search
         }
 
-        imageCategory.setOnClickListener {
-            // Open new activity when imageCategory is clicked
 
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // This method is called before the text is changed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // This method is called when the text is changed
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // This method is called after the text is changed
+                performSearch(searchBar.text.toString())
+            }
         }
 
-        textCategory.setOnClickListener {
-            // Open new activity when textCategory is clicked
-
+        searchBar.addTextChangedListener(textWatcher)
+        searchIcon.setOnClickListener {
+            //val searchTerm = searchBar.text.toString()
+            // Perform the search
+            startVoiceInput()
         }
-
-
 
         return root
     }
 
+    private fun startVoiceInput() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now")
+        resultLauncher.launch(intent)
+    }
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            val data: Intent? = result.data
+            val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val spokenText = result!![0]
+            binding.searchBar.setText(spokenText)
+            // todo: start search
+
+        }
+    }
+    fun performSearch(str: String) {
+        Log.v("search", str)
+
+
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
