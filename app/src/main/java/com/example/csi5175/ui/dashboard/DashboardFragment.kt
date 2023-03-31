@@ -1,5 +1,6 @@
 package com.example.csi5175.ui.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +61,19 @@ class DashboardFragment : Fragment() {
         // Set onClickListener for orderHistoryButton
         orderHistoryButton.setOnClickListener {
             // Handle button click
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, "https://www.example.com")
+            startActivity(Intent.createChooser(intent, "Share link via"))
+            /*
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.my_image)
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "image/"
+            val uri = getImageUri(bitmap)
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            startActivity(Intent.createChooser(intent, "Share image via"))*/
+
+
         }
         // Set onClickListener for checkoutButton
         checkoutButton.setOnClickListener {
