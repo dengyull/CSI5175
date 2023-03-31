@@ -79,6 +79,14 @@ class NotificationsFragment : Fragment() {
         zipcode_change.setBackgroundResource(android.R.color.transparent)
         city_change.setBackgroundResource(android.R.color.transparent)
         street_change.setBackgroundResource(android.R.color.transparent)
+        firstName_change.isEnabled = !firstName_change.isEnabled
+        lastName_change.isEnabled = !lastName_change.isEnabled
+        phone_change.isEnabled = !phone_change.isEnabled
+        country_change.isEnabled = !country_change.isEnabled
+        state_change.isEnabled = !state_change.isEnabled
+        zipcode_change.isEnabled = !zipcode_change.isEnabled
+        city_change.isEnabled = !city_change.isEnabled
+        street_change.isEnabled = !street_change.isEnabled
 
         binding.btnLogout.setOnClickListener{
             var sharedPref : SharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
@@ -109,13 +117,14 @@ class NotificationsFragment : Fragment() {
                 // Hide underline when the EditText view is disabled
                 val addres = Address(country_change.text.toString(),state_change.text.toString(),zipcode_change.text.toString(),city_change.text.toString(),street_change.text.toString())
 
-                val uuser = User(user.uid,user.email,user.password,firstName_change.text.toString(),lastName_change.text.toString(),phone_change.text.toString().toInt(),addres,user.history,user.favorite,user.cart)
-                if (db != null) {
-                    db.userDao().updateUserInfo(uuser)
-                    user = uuser
+                //todo: update use infomation
+                val uuser = null//User(user.uid,user.email,user.password,firstName_change.text.toString(),lastName_change.text.toString(),phone_change.text.toString().toInt(),addres,user.history,user.favorite,user.cart)
+                //if (db != null) {
+                if (uuser != null) {
+                    //db.userDao().updateUserInfo(uuser)
+                    //user = uuser
                 } else {
-                    Toast.makeText(requireContext(), "cannot write to database", Toast.LENGTH_LONG).show()
-
+                    Toast.makeText(requireContext(), "cannot update use infomation", Toast.LENGTH_LONG).show()
                 }
                 firstName_change.setBackgroundResource(android.R.color.transparent)
                 lastName_change.setBackgroundResource(android.R.color.transparent)
