@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         button = findViewById(R.id.button)
         button.setOnClickListener{
-            val intent = Intent(this, MainActivity2::class.java)
+            val intent = Intent(this, ulogin::class.java)
             startActivity(intent)
         }
 

@@ -1,5 +1,6 @@
 package com.example.csi5175
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -15,21 +16,17 @@ class Login : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.loginEmail      //input Email
-        binding.loginPassword       //input Password
+        //binding.loginEmail      //input Email
+        //binding.loginPassword       //input Password
 
         //The button is the "confirm" button. The login authorize process should be run after click.
-        binding.loginButton.setOnClickListener{
-            loginAuthorize()
-        }
 
-        binding.registerButton.setOnClickListener{
-
-        }
 
     }
 
     private fun loginAuthorize() {
-        TODO("Not yet implemented")
+        val intent = Intent(this, MainActivity2::class.java)
+        startActivity(intent)
+        finish()
     }
 }
