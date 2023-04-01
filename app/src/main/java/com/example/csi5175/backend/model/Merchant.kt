@@ -11,7 +11,7 @@ data class Merchant (
     @ColumnInfo
     var products: List<Product>,
     @ColumnInfo("phone_number")
-    var phoneNumber: Int,
+    var phoneNumber: Long,
     @ColumnInfo
     var rate: Double,
     @ColumnInfo

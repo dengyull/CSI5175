@@ -17,7 +17,7 @@ data class User (
     @ColumnInfo(name = "last_name")
     var lastName: String,
     @ColumnInfo
-    var phone: Int,
+    var phone: Long,
     @ColumnInfo
     var address: Address,
     @ColumnInfo
