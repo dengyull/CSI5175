@@ -106,15 +106,15 @@ class HomeFragment : Fragment() {
 
 
         RecyclerViewpopular.layoutManager = LinearLayoutManager(requireContext())
-        val myDataset:List<Product> = db?.productDao()?.getAllProduct() ?: listOf()//Todo: favourlist
+        val myDataset:List<Product> = listOf()//db?.productDao()?.getAllProduct() ?: listOf()//Todo: favourlist
         Log.v("database", myDataset.toString())
-        val adapter = productAdapter(myDataset)
-        RecyclerViewpopular.adapter = adapter
+        //val adapter = productAdapter(myDataset)
+       // RecyclerViewpopular.adapter = adapter
 
         RecyclerViewfeatured.layoutManager = LinearLayoutManager(requireContext())
-        val myDatasetfeatured:List<Product> =  db?.productDao()?.getAllProduct() ?: listOf()//Todo: featuredlist
-        val adapterfeatured = productAdapter(myDatasetfeatured)
-        RecyclerViewfeatured.adapter = adapterfeatured
+        val myDatasetfeatured:List<Product> =  listOf()//db?.productDao()?.getAllProduct() ?: listOf()//Todo: featuredlist
+        //val adapterfeatured = productAdapter(myDatasetfeatured)
+        //RecyclerViewfeatured.adapter = adapterfeatured
 
         // Set click listeners
         popularCard.setOnClickListener {

@@ -61,17 +61,22 @@ class ProductDetails : Fragment() {
         val buttonAddToCart = view.findViewById<Button>(R.id.button_addtocart)
         val shareButtons = view.findViewById<ImageButton>(R.id.imageButton)
         shareButtons.setOnClickListener{
-            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.cart)
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, "https://www.example.com")
+            startActivity(Intent.createChooser(intent, "Share link via"))
+
+            /*val bitmap = BitmapFactory.decodeResource(resources, R.drawable.cart)
 
             val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "image/*"
+            intent.type = "image/"
             //intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile))
             intent.setPackage("com.instagram.android")
             try {
                 context?.startActivity(intent)
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(context, "Instagram not installed", Toast.LENGTH_SHORT).show()
-            }
+            }*/
         }
 
         // Set an onClick listener to the button

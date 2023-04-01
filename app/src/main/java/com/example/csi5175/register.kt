@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.csi5175.backend.model.Address
+import com.example.csi5175.backend.model.Product
+import com.example.csi5175.backend.model.User
 import com.example.csi5175.backend.persistence.AppDatabase
 
 class register : AppCompatActivity() {
@@ -31,16 +33,23 @@ class register : AppCompatActivity() {
         var db = AppDatabase.getAppDatabase(applicationContext)
         submitButton.setOnClickListener{
             val addres = Address(country.text.toString(),state.text.toString(),zipcode.text.toString(),city.text.toString(),street.text.toString())
-            //todo: insert user
-            // db?.userDao()?.insert(email.text.toString(),password.text.toString(),firstName.text.toString(),lastName.text.toString(),phone.text.toString().toInt())
-            // if return user:
-            // var sharedPref : SharedPreferences = getPreferences(Context.MODE_PRIVATE);
-            // sharedPref.edit().putInt("uid", uid).apply()
-            Toast.makeText(applicationContext, "register success", Toast.LENGTH_LONG).show()
-            val resultIntent = Intent()
-            resultIntent.putExtra("result", "registration_successful")
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
+
+            var phonenumber = phone.text.toString().toInt()
+
+            db?.userDao()?.insert(User(email = email.text.toString(), password = password.text.toString(),firstName = firstName.text.toString(),lastName = lastName.text.toString(),phone = phonenumber, address = addres, history = null, favorite = null, cart = null))
+            val user = db?.userDao()?.getUserByEmailAndPassword(email.text.toString(),password.text.toString())
+            var sharedPref : SharedPreferences = getPreferences(Context.MODE_PRIVATE);
+            if (user != null) {
+                sharedPref.edit().putInt("uid", user.uid).apply()
+                Toast.makeText(applicationContext, "register success", Toast.LENGTH_LONG).show()
+                val resultIntent = Intent()
+                resultIntent.putExtra("result", "registration_successful")
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            } else {
+                Toast.makeText(applicationContext, "register fail", Toast.LENGTH_LONG).show()
+
+            }
 
         }
     }

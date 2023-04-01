@@ -75,8 +75,8 @@ class browse : Fragment() {
         RecyclerViewtotal.layoutManager = LinearLayoutManager(requireContext())
         val myDataset:List<Product> = db?.productDao()?.getAllProduct() ?: listOf()//Todo: favourlist
         Log.v("database", myDataset.toString())
-        val adapter = productAdapter(myDataset)
-        RecyclerViewtotal.adapter = adapter
+        //val adapter = productAdapter(myDataset){item}
+        //RecyclerViewtotal.adapter = adapter
 
         // Set up the search listener
         searchIcon.setOnClickListener {

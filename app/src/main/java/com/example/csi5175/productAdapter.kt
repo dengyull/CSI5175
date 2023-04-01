@@ -9,7 +9,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi5175.backend.model.Product
 
-class productAdapter(private val myDataset: List<Product>) : RecyclerView.Adapter<productAdapter.MyViewHolder>() {
+class productAdapter(private val myDataset: List<Product>,
+                     private val addClick: (Product) -> Unit,
+                     private val plusClick: (Product) -> Unit,
+                     private val minusClick: (Product) -> Unit,
+                     private val shareClicks: (Product) -> Unit): RecyclerView.Adapter<productAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val imageView: ImageView = itemView.findViewById(R.id.product_image)

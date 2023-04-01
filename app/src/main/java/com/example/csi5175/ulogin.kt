@@ -33,7 +33,9 @@ class ulogin : AppCompatActivity() {
 
     private fun loginAuthorize() {
         var db = AppDatabase.getAppDatabase(applicationContext)
-        var uid = 0//db?.userDao().login(str1,str2)
+        var email = findViewById<TextView>(R.id.login_email)
+        var password = findViewById<TextView>(R.id.login_password)
+        var uid = db?.userDao()?.getUserByEmailAndPassword(email.text.toString(),password.text.toString())?.uid
         if(uid != null){
             var sharedPref : SharedPreferences = getPreferences(Context.MODE_PRIVATE);
             sharedPref.edit().putInt("uid", uid).apply()
