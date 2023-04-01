@@ -2,6 +2,7 @@ package com.example.csi5175.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,22 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.csi5175.CheckOutAdapter
+import com.example.csi5175.ProductDetails
 import com.example.csi5175.R
+import com.example.csi5175.backend.model.Product
+import com.example.csi5175.backend.persistence.AppDatabase
 import com.example.csi5175.databinding.FragmentDashboardBinding
+import com.example.csi5175.productAdapter
 
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 
+    private var db:AppDatabase? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -38,29 +48,19 @@ class DashboardFragment : Fragment() {
             textView.text = it
         }*/
     // Find views by their IDs
-        val orderHistoryButton =root.findViewById<Button>(R.id.button_orderhistory)
-        val restaurantTitleTextView = root.findViewById<TextView>(R.id.restaurant_title)
-        val priceTextView = root.findViewById<TextView>(R.id.price)
-        val cartCardView = root.findViewById<CardView>(R.id.cart_card)
-        val detailsRestaurantTitle = root.findViewById<TextView>(R.id.details_restaurant_title)
-        val detailsFood = root.findViewById<TextView>(R.id.details_food)
-        val totalPrice = root.findViewById<TextView>(R.id.Total_price)
         val checkoutButton = root.findViewById<Button>(R.id.button_checkout)
+        val RecyclerViewpopular = root.findViewById<RecyclerView>(R.id.RecyclerView_checkout)
 
-        val showdetails_button = root.findViewById<ImageView>(R.id.showdetails_button)
-        val details_card = root.findViewById<CardView>(R.id.details_card)
-        showdetails_button.setOnClickListener {
-            // 将details_card设置为可见
-            details_card.visibility = View.VISIBLE
-            detailsRestaurantTitle.text = restaurantTitleTextView.text
-            // Set detailsFood text
-            detailsFood.text = "Food details here!"
-            // Set totalPrice text
-            totalPrice.text = priceTextView.text
-        }
+        db = context?.let { AppDatabase.getAppDatabase(it) }
+        RecyclerViewpopular.layoutManager = LinearLayoutManager(requireContext())
+        val myDataset:List<Product> = db?.userDao()?.findUserByUid(1)?.cart ?: listOf()//Todo: favourlist
+        Log.v("database", myDataset.toString())
+        val adapter = CheckOutAdapter(myDataset)
+        RecyclerViewpopular.adapter = adapter
         // Set onClickListener for orderHistoryButton
-        orderHistoryButton.setOnClickListener {
+        checkoutButton.setOnClickListener {
             // Handle button click
+
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, "https://www.example.com")
@@ -72,12 +72,18 @@ class DashboardFragment : Fragment() {
             val uri = getImageUri(bitmap)
             intent.putExtra(Intent.EXTRA_STREAM, uri)
             startActivity(Intent.createChooser(intent, "Share image via"))*/
+            // Create a new instance of the fragment you want to navigate to
 
+            //findNavController().navigate(R.id.action_navigation_dashboard_to_productdetail)
 
         }
         // Set onClickListener for checkoutButton
         checkoutButton.setOnClickListener {
             // Handle button click
+            //todo: clear cart and inser to history
+            //
+            //val history = db?.userDao().insertOrder()
+
         }
         return root
     }

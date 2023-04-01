@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,6 +20,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi5175.R
@@ -120,6 +122,10 @@ class HomeFragment : Fragment() {
         }
         featuredCard.setOnClickListener {
             
+        }
+        root.findViewById<Button>(R.id.button2).setOnClickListener {
+
+            findNavController().navigate(R.id.action_navigation_home_to_productDetails)
         }
 
 

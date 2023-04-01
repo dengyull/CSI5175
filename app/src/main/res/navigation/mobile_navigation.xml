@@ -9,19 +9,31 @@
         android:id="@+id/navigation_home"
         android:name="com.example.csi5175.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_productDetails"
+            app:destination="@id/productDetails" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.csi5175.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_productdetail1"
+            app:destination="@id/productdetail1" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_browse"
         android:name="com.example.csi5175.browse"
         android:label="fragment_browse"
-        tools:layout="@layout/fragment_browse" />
+        tools:layout="@layout/fragment_browse" >
+        <action
+            android:id="@+id/action_navigation_browse_to_productdetail1"
+            app:destination="@id/productdetail1" />
+    </fragment>
 
     <fragment
         android:id="@+id/navhomelist"
@@ -112,5 +124,15 @@
             android:id="@+id/action_orderhistories_to_navigation_notifications"
             app:destination="@id/navigation_notifications" />
     </fragment>
+    <fragment
+        android:id="@+id/productDetails"
+        android:name="com.example.csi5175.ProductDetails"
+        android:label="fragment_productdetails"
+        tools:layout="@layout/fragment_productdetails" />
+    <fragment
+        android:id="@+id/productdetail1"
+        android:name="com.example.csi5175.productdetail1"
+        android:label="fragment_productdetail1"
+        tools:layout="@layout/fragment_productdetail1" />
 
 </navigation>

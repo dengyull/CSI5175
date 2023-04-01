@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi5175.backend.model.Product
@@ -81,6 +83,10 @@ class browse : Fragment() {
             val searchTerm = searchBar.text.toString()
             // Perform the search
         }
+        root.findViewById<Button>(R.id.button3).setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_browse_to_productdetail1)
+        }
+
 
 
         val textWatcher = object : TextWatcher {

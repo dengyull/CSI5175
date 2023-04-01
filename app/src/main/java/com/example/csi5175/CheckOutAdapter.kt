@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi5175.backend.model.Product
 
-class productAdapter(private val myDataset: List<Product>) : RecyclerView.Adapter<productAdapter.MyViewHolder>() {
+class CheckOutAdapter(private val myDataset: List<Product>) : RecyclerView.Adapter<CheckOutAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val imageView: ImageView = itemView.findViewById(R.id.product_image)
@@ -20,7 +19,6 @@ class productAdapter(private val myDataset: List<Product>) : RecyclerView.Adapte
         }
 
         override fun onClick(view: View) {
-            // todo:show productdetail fragmeny
         }
     }
 
