@@ -8,9 +8,8 @@ import java.util.Date
 
 @Entity(tableName = "order_table")
 data class Order (
-    @PrimaryKey
-    @ColumnInfo
-    var oid: Int,
+    @PrimaryKey(autoGenerate = true)
+    var oid: Int = 0,
     @ColumnInfo
     var uid: Int,
     @ColumnInfo("date_time")

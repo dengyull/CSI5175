@@ -12,9 +12,8 @@ import androidx.room.PrimaryKey
     parentColumns = ["mid"]
 )], tableName = "product")
 data class Product (
-    @PrimaryKey
-    @ColumnInfo
-    var pid: Int,
+    @PrimaryKey(autoGenerate = true)
+    var pid: Int = 0,
     @ColumnInfo(index = true)
     var mid: Int,
     @ColumnInfo(name = "product_name")
@@ -32,5 +31,7 @@ data class Product (
     @ColumnInfo
     var calories: List<Double>?,
     @ColumnInfo
-    var label: List<String>?
+    var label: List<String>?,
+    @ColumnInfo
+    var sold: Int
 )

@@ -25,8 +25,8 @@ class UserControllerTest {
         userDao = db.userDao()
         val address1 = Address(country = "USA", state = "PA", zipcode = "15222", city = "Pittsburgh", street = "316 4th Ave")
         val address2 = Address(country = "Canada", state = "ON", zipcode = "K1S0X7", city = "Ottawa", street = "47 Laurier St")
-        val u1 = User(uid = 1, email = "123@gmail.com", password = "123", firstName = "uz", lastName = "aa", phone = 123123, address = address1, history = null, favorite = null, cart = null)
-        val u2 = User(uid = 2, email = "112321323@outlook.com", password = "123sa", firstName = "fs", lastName = "xc", phone = 4343524, address = address2, history = null, favorite = null, cart = null)
+        val u1 = User(email = "123@gmail.com", password = "123", firstName = "uz", lastName = "aa", phone = 123123, address = address1, history = null, favorite = null, cart = null)
+        val u2 = User(email = "112321323@outlook.com", password = "123sa", firstName = "fs", lastName = "xc", phone = 4343524, address = address2, history = null, favorite = null, cart = null)
         userDao.insert(u1)
         userDao.insert(u2)
 
@@ -72,6 +72,26 @@ class UserControllerTest {
         Assert.assertEquals(userDao.getAllUsers().size, 0)
     }
 
+    @Test
+    fun testGetUserByEmailAndPassword() {
+        Assert.assertEquals(userDao.getUserByEmailAndPassword("123@gmail.com", "123").uid, 1)
+        Assert.assertEquals(userDao.getUserByEmailAndPassword("112321323@outlook.com", "123sa").uid, 2)
+    }
 
+    @Test
+    fun testCleanCart() {
+        val product1 = Product(pid = 56, mid = 1, image = null, pname = "cap", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 0)
+        val product2 = Product(pid = 5, mid = 1, image = null, pname = "care", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 0)
+        val l1 = ArrayList<Product>()
+        l1.add(product1)
+        l1.add(product2)
+        val address1 = Address(country = "USA", state = "PA", zipcode = "15222", city = "Pittsburgh", street = "316 4th Ave")
+        val u1 = User(email = "456@gmail.com", password = "123", firstName = "u1z", lastName = "aa4", phone = 123123, address = address1, history = null, favorite = null, cart = l1)
+        userDao.insert(u1)
+        val u = userDao.getUserByEmailAndPassword("456@gmail.com", "123")
+        Assert.assertEquals(userDao.findUserByUid(u.uid).cart?.size, 2)
+        userDao.cleanCart(u.uid)
+        Assert.assertEquals(userDao.findUserByUid(u.uid).cart?.size, 0)
+    }
 
 }
