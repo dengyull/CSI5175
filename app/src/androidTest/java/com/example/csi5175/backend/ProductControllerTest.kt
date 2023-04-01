@@ -37,8 +37,8 @@ class ProductControllerTest {
         calories1.add(350.0)
         calories2.add(0.0)
         calories2.add(0.0)
-        val product1 = Product(pid = 12, mid = 1, image = null, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = labelList1, calories = calories1)
-        val product2 = Product(pid = 34, mid = 2, image = null, pname = "watch", description = "good watch", category = "electronic", quantity = 20, price = 123.2, label = labelList2, calories = calories2)
+        val product1 = Product(pid = 12, mid = 1, image = null, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = labelList1, calories = calories1, sold = 1)
+        val product2 = Product(pid = 34, mid = 2, image = null, pname = "watch", description = "good watch", category = "electronic", quantity = 20, price = 123.2, label = labelList2, calories = calories2, sold = 2)
         merchantDao = db.merchantDao()
         val l1 = ArrayList<Product>()
         val l2 = ArrayList<Product>()
@@ -88,8 +88,18 @@ class ProductControllerTest {
     }
 
     @Test
+    fun testGetProductWithPrefix() {
+        val product1 = Product(pid = 56, mid = 1, image = null, pname = "cap", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 0)
+        productDao.insert(product1)
+        val product2 = Product(pid = 5, mid = 1, image = null, pname = "care", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 0)
+        productDao.insert(product2)
+        Assert.assertEquals(productDao.getProductsWithPrefix("ca").size, 3)
+        Assert.assertEquals(productDao.getProductsWithPrefix("wa").size, 1)
+    }
+
+    @Test
     fun testUpdate() {
-        productDao.updateProduct(Product(pid = 12, mid = 1, image = null, pname = "wallet", description = "good wallet", category = "personal item", quantity = 20, price = 43123.1, calories = null, label = null))
+        productDao.updateProduct(Product(pid = 12, mid = 1, image = null, pname = "wallet", description = "good wallet", category = "personal item", quantity = 20, price = 43123.1, calories = null, label = null, sold = 0))
         Assert.assertEquals(productDao.findProductByPid(12).pname, "wallet")
     }
 
@@ -100,5 +110,22 @@ class ProductControllerTest {
         Assert.assertEquals(productDao.getAllProduct().size, 1)
         productDao.delete(34)
         Assert.assertEquals(productDao.getAllProduct().size, 0)
+    }
+
+    @Test
+    fun testGetFirstKSoldItems() {
+        val product3 = Product(pid = 78, mid = 1, image = null, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 3)
+        val product4 = Product(pid = 9, mid = 1, image = null, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 4)
+        productDao.insert(product3, product4)
+        Assert.assertEquals(productDao.getFirstMostPopularProduct(2).size, 2)
+        Assert.assertEquals(productDao.getFirstMostPopularProduct(2).first().pid, 9)
+        Assert.assertEquals(productDao.getFirstMostPopularProduct(2).get(1).pid, 78)
+    }
+
+    @Test
+    fun testAddSold() {
+        Assert.assertEquals(productDao.findProductByPid(34).sold, 2)
+        productDao.addSoldById(34)
+        Assert.assertEquals(productDao.findProductByPid(34).sold, 3)
     }
 }

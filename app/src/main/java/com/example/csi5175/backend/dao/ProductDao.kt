@@ -11,11 +11,20 @@ interface ProductDao {
     @Query("SELECT * FROM product")
     fun getAllProduct(): List<Product>
 
+    @Query("SELECT * FROM product WHERE product_name LIKE :prefix || '%'")
+    fun getProductsWithPrefix(prefix: String): List<Product>
+
+    @Query("SELECT * FROM product ORDER BY sold DESC LIMIT :k ")
+    fun getFirstMostPopularProduct(k: Int): List<Product>
+
     @Query("SELECT * FROM product WHERE mid = :mid")
     fun findAllProductsByMerchant(mid: Int): List<Product>
 
     @Update
     fun updateProduct(product: Product)
+
+    @Query("UPDATE product SET sold = sold + 1 WHERE pid =:pid")
+    fun addSoldById(pid: Int)
 
     @Insert
     fun insert(vararg products: Product)

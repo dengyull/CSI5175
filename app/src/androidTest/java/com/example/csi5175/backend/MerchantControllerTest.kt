@@ -23,23 +23,21 @@ class MerchantControllerTest {
         // Once db is created, to interact with db, it is needed to acquire the dao from the db.
         db = Room.inMemoryDatabaseBuilder(context = ApplicationProvider.getApplicationContext(), AppDatabase::class.java).build()
         merchantDao = db.merchantDao()
-        val product1 = Product(pid = 12, mid = 1, image = null, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, calories = null, label = null)
+        val product1 = Product(mid = 0, image = null, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, calories = null, label = null, sold = 0)
         val l1 = ArrayList<Product>()
         val l2 = ArrayList<Product>()
         l1.add(product1)
-        val product2 = Product(pid = 34, mid = 2, image = null, pname = "watch", description = "good watch", category = "electronic", quantity = 20, price = 123.2, calories = null, label = null)
+        val product2 = Product(mid = 1, image = null, pname = "watch", description = "good watch", category = "electronic", quantity = 20, price = 123.2, calories = null, label = null, sold = 0)
         l2.add(product2)
         val address1 = Address(country = "USA", state = "PA", zipcode = "15222", city = "Pittsburgh", street = "316 4th Ave")
         val address2 = Address(country = "Canada", state = "ON", zipcode = "K1S0X7", city = "Ottawa", street = "47 Laurier St")
         val merchant1 = Merchant(
-            mid = 1,
             phoneNumber = 12345,
             rate = 4.5,
             address = address1,
             products = l1
         )
         val merchant2 = Merchant(
-            mid = 2,
             phoneNumber = 453543,
             rate = 3.2,
             address = address2,
@@ -68,7 +66,7 @@ class MerchantControllerTest {
     @Test
     fun testDelete() {
         Assert.assertEquals(merchantDao.getAllMerchant().size, 2)
-        val product1 = Product(pid = 12, mid = 1, image = null, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, calories = null, label = null)
+        val product1 = Product(pid = 12, mid = 1, image = null, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, calories = null, label = null, sold = 0)
         val l1 = ArrayList<Product>()
         l1.add(product1)
         merchantDao.delete(1)

@@ -6,9 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "merchant")
 data class Merchant (
-    @PrimaryKey
-    @ColumnInfo
-    var mid: Int,
+    @PrimaryKey(autoGenerate = true)
+    var mid: Int = 0,
     @ColumnInfo
     var products: List<Product>,
     @ColumnInfo("phone_number")
