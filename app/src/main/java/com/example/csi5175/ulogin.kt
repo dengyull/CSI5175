@@ -27,7 +27,6 @@ class ulogin : AppCompatActivity() {
         registerButton.setOnClickListener {
             val intent = Intent(this, register::class.java)
             startActivityForResult(intent, REGISTER_REQUEST_CODE)
-
         }
     }
 
@@ -44,9 +43,7 @@ class ulogin : AppCompatActivity() {
             finish()
         } else {
             Toast.makeText(applicationContext, "login fail", Toast.LENGTH_LONG).show()
-
         }
-
 
     }
 
