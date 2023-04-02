@@ -37,7 +37,8 @@ class productAdapter(private val myDataset: List<Product>,
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         myDataset[position].image?.planes
         // todo: image insert
-        // holder.imageView.setImageBitmap(myDataset[position].image?.planes)
+        //holder.imageView.setImageDrawable(myDataset[position].image?.planes)
+        holder.imageView.setOnClickListener { addClick(myDataset[position]) }
         holder.textView_product_name.text = myDataset[position].pname
         holder.textView_product_price.text = myDataset[position].price.toString()
     }

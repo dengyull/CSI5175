@@ -48,7 +48,7 @@ class DashboardFragment : Fragment() {
             textView.text = it
         }*/
     // Find views by their IDs
-        val checkoutButton = root.findViewById<Button>(R.id.button_checkout)
+        val checkoutButton = root.findViewById<Button>(R.id.btn_commit)
         val RecyclerViewpopular = root.findViewById<RecyclerView>(R.id.RecyclerView_checkout)
 
         db = context?.let { AppDatabase.getAppDatabase(it) }
