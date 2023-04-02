@@ -103,6 +103,10 @@ class home_container : Fragment() {
             addClick = {Product ->
                 Toast.makeText(requireContext(), "addClick", Toast.LENGTH_LONG).show()
                 val newFragment = productdetail1()
+                val bundle = Bundle()
+                bundle.putInt("pid", Product.pid)
+                newFragment.arguments = bundle
+
 
                 // Get the FragmentManager and start a new transaction
                 val fragmentManager = requireActivity().supportFragmentManager

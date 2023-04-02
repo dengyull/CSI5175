@@ -64,7 +64,7 @@
                             android:textSize="16sp" />
 
                         <ImageButton
-                            android:id="@+id/imageButton"
+                            android:id="@+id/productShareButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:src="@drawable/shareicon" />
