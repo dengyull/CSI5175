@@ -46,7 +46,7 @@
                     android:gravity="top"
                     android:id="@+id/tv_allGoodsNum"
                     android:layout_weight="1"
-                    android:text="共4件商品"/>
+                    android:text="total prodoct"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

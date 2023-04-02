@@ -29,6 +29,7 @@ import com.example.csi5175.productAdapter
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
+import kotlin.properties.Delegates
 
 class DashboardFragment : Fragment() {
 
@@ -38,6 +39,8 @@ class DashboardFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var myDataset:List<Product>
+    private var myuid by Delegates.notNull<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,28 +56,37 @@ class DashboardFragment : Fragment() {
         val checkoutButton = root.findViewById<Button>(R.id.btn_commit_checkout)
         val RecyclerViewpopular = root.findViewById<RecyclerView>(R.id.RecyclerView_checkout)
         val allprice = root.findViewById<TextView>(R.id.tv_allPrice)
+        val productsum = root.findViewById<TextView>(R.id.tv_allGoodsNum)
+
         var pricenumber = 0.0//allprice.text.toString().toDouble()
+        var productnum = 0
 
         var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        val myuid = sharedPref.getInt("uid", 0)
+        myuid = sharedPref.getInt("uid", 0)
         db = context?.let { AppDatabase.getAppDatabase(it) }
         RecyclerViewpopular.layoutManager = LinearLayoutManager(requireContext())
-        val myDataset:List<Product> = db?.userDao()?.findUserByUid(myuid)?.cart ?: listOf()//Todo: favourlist
+        myDataset = db?.userDao()?.findUserByUid(myuid)?.cart ?: listOf()//Todo: favourlist
         for(ds in myDataset){
-            pricenumber+=ds.price
+            pricenumber+=ds.price * ds.quantity
+            productnum += ds.quantity
         }
-        allprice.text = pricenumber.toString()
+        productsum.text = "total "+productnum.toString()+ " product"
+        allprice.text = "total price: "+ pricenumber.toString()
         val adapter = CheckOutAdapter(myDataset,
             plusClick = {Product ->
                 Toast.makeText(requireContext(), "plusClick", Toast.LENGTH_LONG).show()
                 pricenumber+=Product.price
-                allprice.text = pricenumber.toString()
+                productnum += 1
+                productsum.text = "total "+productnum.toString()+ " product"
+                allprice.text = "total price: "+ pricenumber.toString()
             },
             minusClick = {Product ->
 
                 Toast.makeText(requireContext(), "minusClick", Toast.LENGTH_LONG).show()
                 pricenumber-=Product.price
-                allprice.text = pricenumber.toString()
+                productnum -= 1
+                productsum.text = "total "+productnum.toString()+ " product"
+                allprice.text = "total price: "+ pricenumber.toString()
             })
         RecyclerViewpopular.adapter = adapter
         // Set onClickListener for orderHistoryButton
@@ -98,19 +110,24 @@ class DashboardFragment : Fragment() {
                 user.cart = mutableListOf<Product>()
                 db?.userDao()?.updateUserInfo(user)
 
-                RecyclerViewpopular.adapter = CheckOutAdapter(
-                    mutableListOf<Product>(),
+                myDataset = mutableListOf<Product>()
+                RecyclerViewpopular.adapter = CheckOutAdapter(myDataset,
                     plusClick = {Product ->
                         Toast.makeText(requireContext(), "plusClick", Toast.LENGTH_LONG).show()
                         pricenumber+=Product.price
-                        allprice.text = pricenumber.toString()
+                        productnum += 1
+                        productsum.text = "total "+productnum.toString()+ " product"
+                        allprice.text = "total price: "+ pricenumber.toString()
                     },
                     minusClick = {Product ->
 
                         Toast.makeText(requireContext(), "minusClick", Toast.LENGTH_LONG).show()
                         pricenumber-=Product.price
-                        allprice.text = pricenumber.toString()
+                        productnum -= 1
+                        productsum.text = "total "+productnum.toString()+ " product"
+                        allprice.text = "total price: "+ pricenumber.toString()
                     })
+
             }
 
         }
@@ -119,6 +136,14 @@ class DashboardFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        val user = db?.userDao()?.findUserByUid(myuid)
+        if (user != null) {
+            user.cart = myDataset
+            db?.userDao()?.updateUserInfo(user)
+
+        }
+
         _binding = null
     }
 }
