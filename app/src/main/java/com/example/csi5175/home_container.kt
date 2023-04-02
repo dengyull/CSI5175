@@ -54,7 +54,6 @@ class home_container : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentHomeContainerBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val searchBar = root.findViewById<EditText>(R.id.search_bar)
@@ -141,13 +140,6 @@ class home_container : Fragment() {
 
         }
         featuredCard.setOnClickListener {
-
-        }
-        root.findViewById<Button>(R.id.button2).setOnClickListener {
-            //Product(mid = 5, pname = "food", price = 10.0,description = "description",image = null,category = "", quantity = 100, calories = null, label= null, sold = 0)
-            //db?.productDao()?.insert(Product(mid = 5, pname = "food", price = 10.0,description = "description",image = null,category = "", quantity = 100, calories = null, label= null, sold = 0))
-
-            findNavController().navigate(R.id.action_navigation_home_to_productDetails)
 
         }
 

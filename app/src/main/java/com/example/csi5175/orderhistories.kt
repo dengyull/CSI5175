@@ -3,11 +3,14 @@ package com.example.csi5175
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi5175.backend.model.Order
@@ -46,14 +49,24 @@ class orderhistories : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_orderhistories, container, false)
+        var textView17 =view.findViewById<TextView>(R.id.textView17)
 
         val db = context?.let { AppDatabase.getAppDatabase(it) }
-        var sharedPref : SharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
-        sharedPref.edit().putInt("uid", 0).apply()
+        var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         val uid = sharedPref.getInt("uid", 0)
         if (db != null) {
             var user = db.userDao().findUserByUid(uid)
-            //orderhisto = user.history!!
+            Toast.makeText(requireContext(), "uid"+uid, Toast.LENGTH_LONG).show()
+            if(user.history!= null){
+                orderhisto = user.history!!
+
+            }
+            var texts = ""
+            for (or in user.history!!){
+
+                texts = texts + or
+            }
+            textView17.text = texts
         } else{
             orderhisto = listOf()
         }

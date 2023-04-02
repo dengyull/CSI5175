@@ -74,18 +74,37 @@ class productdetail1 : Fragment() {
             Product?.quantity = productNumber.text.toString().toInt()
             var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
             val myuid = sharedPref.getInt("uid", 0)
-            var cart = db?.userDao()?.findUserByUid(myuid)?.cart
+            val user = db?.userDao()?.findUserByUid(myuid)
+            var cart = user?.cart
+            val shopcart = mutableListOf<Product>()
+            if (cart != null) {
+                shopcart.addAll(cart)
+                if (Product != null) {
+                    shopcart.add(Product)
+                    user?.cart = shopcart
+                    if (user != null) {
+                        db?.userDao()?.updateUserInfo(user)
+                    }
+                }
+            } else{
+                if (Product != null) {
+                    shopcart.add(Product)
+                    user?.cart = shopcart
+                    if (user != null) {
+
+                        db?.userDao()?.updateUserInfo(user)
+                    }
+                }
+            }
+
         }
         DecreaseButton.setOnClickListener {
             val num = max(productNumber.text.toString().toInt()-1,0)
-
-            Toast.makeText(requireContext(), "num"+num, Toast.LENGTH_LONG).show()
             productNumber.setText(num.toString())
 
         }
         increaseButton.setOnClickListener {
             val num = productNumber.text.toString().toInt()+1
-            Toast.makeText(requireContext(), "num"+num, Toast.LENGTH_LONG).show()
             productNumber.setText(num.toString())
         }
 
