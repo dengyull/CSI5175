@@ -9,11 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.csi5175.backend.model.Product
 import com.example.csi5175.backend.persistence.AppDatabase
+import java.lang.Integer.max
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +52,7 @@ class productdetail1 : Fragment() {
 
         var Productname = view.findViewById<TextView>(R.id.productdetails_name)
         var productprice = view.findViewById<TextView>(R.id.productdetails_price)
-        var productNumber = view.findViewById<TextView>(R.id.productNumber)
+        var productNumber = view.findViewById<EditText>(R.id.productNumber)
         var productdescription = view.findViewById<TextView>(R.id.productdetails_description)
         var ShareButton = view.findViewById<ImageButton>(R.id.productShareButton)
         var DecreaseButton = view.findViewById<ImageView>(R.id.button_Decrease)
@@ -72,15 +75,18 @@ class productdetail1 : Fragment() {
             var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
             val myuid = sharedPref.getInt("uid", 0)
             var cart = db?.userDao()?.findUserByUid(myuid)?.cart
-
-
         }
         DecreaseButton.setOnClickListener {
-            productNumber.text = (productNumber.text.toString().toInt()-1).toString()
+            val num = max(productNumber.text.toString().toInt()-1,0)
+
+            Toast.makeText(requireContext(), "num"+num, Toast.LENGTH_LONG).show()
+            productNumber.setText(num.toString())
 
         }
         increaseButton.setOnClickListener {
-            productNumber.text = (productNumber.text.toString().toInt()+1).toString()
+            val num = productNumber.text.toString().toInt()+1
+            Toast.makeText(requireContext(), "num"+num, Toast.LENGTH_LONG).show()
+            productNumber.setText(num.toString())
         }
 
 
