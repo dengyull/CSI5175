@@ -33,10 +33,11 @@ class register : AppCompatActivity() {
 
         var db = AppDatabase.getAppDatabase(applicationContext)
         submitButton.setOnClickListener{
+
+            //todo: input type check
+
             val addres = Address(country.text.toString(),state.text.toString(),zipcode.text.toString(),city.text.toString(),street.text.toString())
-
             var phonenumber = phone.text.toString().toLong()
-
             db?.userDao()?.insert(User(email = email.text.toString(), password = password.text.toString(),firstName = firstName.text.toString(),lastName = lastName.text.toString(),phone = phonenumber, address = addres, history = null, favorite = null, cart = null))
             val user = db?.userDao()?.getUserByEmailAndPassword(email.text.toString(),password.text.toString())
 

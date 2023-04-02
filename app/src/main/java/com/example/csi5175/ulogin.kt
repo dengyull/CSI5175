@@ -32,6 +32,7 @@ class ulogin : AppCompatActivity() {
     }
 
     private fun loginAuthorize() {
+        //todo: input type check
         var db = AppDatabase.getAppDatabase(applicationContext)
         var email = findViewById<TextView>(R.id.login_email)
         var password = findViewById<TextView>(R.id.login_password)

@@ -61,7 +61,7 @@ class NotificationsFragment : Fragment() {
         val myuid = sharedPref.getInt("uid", 0)
 
         val db = context?.let { AppDatabase.getAppDatabase(it) }
-        Toast.makeText(requireContext(), "uid"+myuid.toString(), Toast.LENGTH_LONG).show()
+        //Toast.makeText(requireContext(), "uid"+myuid.toString(), Toast.LENGTH_LONG).show()
         var user = db?.userDao()?.findUserByUid(myuid)
         //Toast.makeText(requireContext(), "uid"+user?.uid, Toast.LENGTH_LONG).show()
         firstName_change.setText(user?.firstName)
@@ -96,6 +96,9 @@ class NotificationsFragment : Fragment() {
         }
         binding.buttonSubmit.setOnClickListener {
             // Code to handle button click event
+
+            //todo: input type check
+
             firstName_change.isEnabled = !firstName_change.isEnabled
             lastName_change.isEnabled = !lastName_change.isEnabled
             phone_change.isEnabled = !phone_change.isEnabled
@@ -118,9 +121,7 @@ class NotificationsFragment : Fragment() {
                 // Hide underline when the EditText view is disabled
                 val addres = Address(country_change.text.toString(),state_change.text.toString(),zipcode_change.text.toString(),city_change.text.toString(),street_change.text.toString())
 
-                //todo: update use infomation
                 val uuser = user?.let { it1 -> User(it1.uid,it1.email,it1.password,firstName_change.text.toString(),lastName_change.text.toString(),phone_change.text.toString().toLong(),addres,it1.history,it1.favorite,it1.cart) }
-                //if (db != null) {
                 if (uuser != null) {
                     db?.userDao()?.updateUserInfo(uuser)
                     user = uuser
