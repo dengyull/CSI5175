@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -34,10 +35,12 @@ class ulogin : AppCompatActivity() {
         var db = AppDatabase.getAppDatabase(applicationContext)
         var email = findViewById<TextView>(R.id.login_email)
         var password = findViewById<TextView>(R.id.login_password)
-        var uid = db?.userDao()?.getUserByEmailAndPassword(email.text.toString(),password.text.toString())?.uid
+        var user = db?.userDao()?.getUserByEmailAndPassword(email.text.toString(),password.text.toString())
+        var uid = user?.uid
         if(uid != null){
-            var sharedPref : SharedPreferences = getPreferences(Context.MODE_PRIVATE);
+            var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             sharedPref.edit().putInt("uid", uid).apply()
+            Toast.makeText(applicationContext, "uid"+user?.firstName, Toast.LENGTH_LONG).show()
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
             finish()
@@ -54,7 +57,9 @@ class ulogin : AppCompatActivity() {
             val result = data?.getStringExtra("result")
 
             if (result == "registration_successful") {
-                loginAuthorize()
+                val intent = Intent(this, MainActivity2::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }

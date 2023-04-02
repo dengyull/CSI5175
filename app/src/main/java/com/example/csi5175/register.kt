@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -38,7 +39,8 @@ class register : AppCompatActivity() {
 
             db?.userDao()?.insert(User(email = email.text.toString(), password = password.text.toString(),firstName = firstName.text.toString(),lastName = lastName.text.toString(),phone = phonenumber, address = addres, history = null, favorite = null, cart = null))
             val user = db?.userDao()?.getUserByEmailAndPassword(email.text.toString(),password.text.toString())
-            var sharedPref : SharedPreferences = getPreferences(Context.MODE_PRIVATE);
+
+            var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             if (user != null) {
                 sharedPref.edit().putInt("uid", user.uid).apply()
                 Toast.makeText(applicationContext, "register success", Toast.LENGTH_LONG).show()

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,21 +57,22 @@ class NotificationsFragment : Fragment() {
         val zipcode_change = binding.zipcodeChangeInput
         val city_change = binding.cityChangeInput
         val street_change = binding.streetChangeInput
+        var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        val myuid = sharedPref.getInt("uid", 0)
+
         val db = context?.let { AppDatabase.getAppDatabase(it) }
-        if (db != null) {
-            val user = db.userDao().findUserByUid(0)//todo: uid
-            /*
-            firstName_change.setText(user.firstName)
-            lastName_change.setText(user.lastName)
-            phone_change.setText(user.phone)
-            country_change.setText(user.address.country)
-            state_change.setText(user.address.state)
-            zipcode_change.setText(user.address.zipcode)
-            city_change.setText(user.address.city)
-            street_change.setText(user.address.street)*/
-        } else {
-            //todo: signin page
-        }
+        Toast.makeText(requireContext(), "uid"+myuid.toString(), Toast.LENGTH_LONG).show()
+        var user = db?.userDao()?.findUserByUid(myuid)
+        //Toast.makeText(requireContext(), "uid"+user?.uid, Toast.LENGTH_LONG).show()
+        firstName_change.setText(user?.firstName)
+        lastName_change.setText(user?.lastName)
+        phone_change.setText(user?.phone.toString())
+        country_change.setText(user?.address?.country)
+        state_change.setText(user?.address?.state)
+        zipcode_change.setText(user?.address?.zipcode)
+        city_change.setText(user?.address?.city)
+        street_change.setText(user?.address?.street)
+
         firstName_change.setBackgroundResource(android.R.color.transparent)
         lastName_change.setBackgroundResource(android.R.color.transparent)
         phone_change.setBackgroundResource(android.R.color.transparent)
@@ -89,7 +91,6 @@ class NotificationsFragment : Fragment() {
         street_change.isEnabled = !street_change.isEnabled
 
         binding.btnLogout.setOnClickListener{
-            var sharedPref : SharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
             sharedPref.edit().remove("uid").apply()
             requireActivity().finish()
         }
@@ -118,11 +119,11 @@ class NotificationsFragment : Fragment() {
                 val addres = Address(country_change.text.toString(),state_change.text.toString(),zipcode_change.text.toString(),city_change.text.toString(),street_change.text.toString())
 
                 //todo: update use infomation
-                val uuser = null//User(user.uid,user.email,user.password,firstName_change.text.toString(),lastName_change.text.toString(),phone_change.text.toString().toInt(),addres,user.history,user.favorite,user.cart)
+                val uuser = user?.let { it1 -> User(it1.uid,it1.email,it1.password,firstName_change.text.toString(),lastName_change.text.toString(),phone_change.text.toString().toLong(),addres,it1.history,it1.favorite,it1.cart) }
                 //if (db != null) {
                 if (uuser != null) {
-                    //db.userDao().updateUserInfo(uuser)
-                    //user = uuser
+                    db?.userDao()?.updateUserInfo(uuser)
+                    user = uuser
                 } else {
                     Toast.makeText(requireContext(), "cannot update use infomation", Toast.LENGTH_LONG).show()
                 }

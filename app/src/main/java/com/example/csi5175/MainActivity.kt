@@ -1,8 +1,10 @@
 package com.example.csi5175
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.widget.Button
 import com.example.csi5175.databinding.ActivityMain2Binding
 
@@ -16,6 +18,13 @@ class MainActivity : AppCompatActivity() {
         button = findViewById(R.id.button)
         button.setOnClickListener{
             val intent = Intent(this, ulogin::class.java)
+            startActivity(intent)
+        }
+
+        var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        val myuid = sharedPref.getInt("uid", 0)
+        if (myuid!=0){
+            val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
         }
 
