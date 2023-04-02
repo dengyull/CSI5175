@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener{
             val intent = Intent(this, ulogin::class.java)
             startActivity(intent)
+            finish()
         }
 
         var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         if (myuid!=0){
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
+            finish()
         }
 
     }

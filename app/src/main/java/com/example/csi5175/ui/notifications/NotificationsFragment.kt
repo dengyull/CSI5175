@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.csi5175.MainActivity
+import com.example.csi5175.MainActivity2
 import com.example.csi5175.OrderHistory
 import com.example.csi5175.R
 import com.example.csi5175.backend.model.Address
@@ -93,10 +95,10 @@ class NotificationsFragment : Fragment() {
         binding.btnLogout.setOnClickListener{
             sharedPref.edit().remove("uid").apply()
             requireActivity().finish()
+            val intents = Intent (getActivity(), MainActivity::class.java)
+            startActivity(intents)
         }
         binding.buttonSubmit.setOnClickListener {
-            // Code to handle button click event
-
             //todo: input type check
 
             firstName_change.isEnabled = !firstName_change.isEnabled
