@@ -20,6 +20,12 @@ interface ProductDao {
     @Query("SELECT * FROM product WHERE mid = :mid")
     fun findAllProductsByMerchant(mid: Int): List<Product>
 
+    @Query("UPDATE product SET calories =:newCalories WHERE pid =:pid")
+    fun updateCalories(pid: Int, newCalories: List<Double>)
+
+    @Query("UPDATE product SET label =:newLabel WHERE pid =:pid")
+    fun updateLabel(pid: Int, newLabel: List<Double>)
+
     @Update
     fun updateProduct(product: Product)
 
