@@ -1,6 +1,7 @@
 package com.example.csi5175.backend.dao
 
 import androidx.room.*
+import com.example.csi5175.backend.model.Order
 import com.example.csi5175.backend.model.Product
 import com.example.csi5175.backend.model.User
 
@@ -18,6 +19,15 @@ interface UserDao
 
     @Insert
     fun insert(vararg users: User)
+
+    @Query("UPDATE user SET cart =:newCart WHERE uid =:uid")
+    fun updateCart(uid: Int, newCart: List<Product>)
+
+    @Query("UPDATE user SET history =:newHistory WHERE uid =:uid")
+    fun updateHistory(uid: Int, newHistory: List<Order>)
+
+    @Query("UPDATE user SET history =:newFavorite WHERE uid =:uid")
+    fun updateFavorite(uid: Int, newFavorite: List<Product>)
 
     @Update
     fun updateUserInfo(user: User)
