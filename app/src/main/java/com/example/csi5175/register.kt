@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.csi5175.backend.model.Address
+import com.example.csi5175.backend.model.Order
 import com.example.csi5175.backend.model.Product
 import com.example.csi5175.backend.model.User
 import com.example.csi5175.backend.persistence.AppDatabase
@@ -38,7 +39,7 @@ class register : AppCompatActivity() {
 
             val addres = Address(country.text.toString(),state.text.toString(),zipcode.text.toString(),city.text.toString(),street.text.toString())
             var phonenumber = phone.text.toString().toLong()
-            db?.userDao()?.insert(User(email = email.text.toString(), password = password.text.toString(),firstName = firstName.text.toString(),lastName = lastName.text.toString(),phone = phonenumber, address = addres, history = null, favorite = null, cart = null))
+            db?.userDao()?.insert(User(email = email.text.toString(), password = password.text.toString(),firstName = firstName.text.toString(),lastName = lastName.text.toString(),phone = phonenumber, address = addres, history = mutableListOf<Order>(), favorite = listOf<Product>(), cart = listOf<Product>()))
             val user = db?.userDao()?.getUserByEmailAndPassword(email.text.toString(),password.text.toString())
 
             var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
