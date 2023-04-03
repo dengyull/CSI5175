@@ -2,7 +2,9 @@ package com.example.csi5175
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
@@ -103,8 +105,13 @@ class home_container : Fragment() {
         RecyclerViewfeatured.layoutManager = LinearLayoutManager(requireContext())
         //val myDatasetfeatured:List<Product> =  listOf()//db?.productDao()?.getAllProduct() ?: listOf()//Todo: featuredlist
 
-
-        RecyclerViewfeatured.adapter = adapter
+        var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        var myuid = sharedPref.getInt("uid", 0)
+        RecyclerViewfeatured.adapter = db?.userDao()?.findUserByUid(myuid)?.favorite?.let {
+            adapterr(
+                it
+            )
+        }
 
         // Set click listeners
         popularCard.setOnClickListener {
