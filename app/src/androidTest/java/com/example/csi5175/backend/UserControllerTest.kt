@@ -94,4 +94,16 @@ class UserControllerTest {
         Assert.assertEquals(userDao.findUserByUid(u.uid).cart?.size, 0)
     }
 
+    @Test
+    fun testAddCart() {
+        val product1 = Product(pid = 56, mid = 1, image = null, pname = "cap", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 0)
+        val product2 = Product(pid = 5, mid = 1, image = null, pname = "care", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 0)
+        val l1 = ArrayList<Product>()
+        l1.add(product1)
+        l1.add(product2)
+        val u = userDao.getUserByEmailAndPassword("123@gmail.com", "123")
+        userDao.updateCart(u.uid, l1)
+        Assert.assertEquals(userDao.findUserByUid(u.uid).cart?.size, 2)
+    }
+
 }

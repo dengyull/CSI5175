@@ -2,6 +2,7 @@ package com.example.csi5175.backend.dao
 
 import androidx.room.*
 import com.example.csi5175.backend.model.Order
+import com.example.csi5175.backend.model.Product
 
 
 @Dao
@@ -14,6 +15,9 @@ interface OrderDao {
 
     @Query("SELECT * FROM order_table WHERE uid = :uid")
     fun findAllOrdersByUser(uid: Int): List<Order>
+
+    @Query("UPDATE order_table SET list =:newList WHERE oid =:oid")
+    fun updateProductList(oid: Int, newList: List<Product>)
 
     @Update
     fun updateOrder(order: Order)
