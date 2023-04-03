@@ -29,12 +29,14 @@ class OrderAdapter(private val myDataset: List<Order>) : RecyclerView.Adapter<Or
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
         return MyViewHolder(view)
+
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // todo: image insert
         // holder.imageView.setImageBitmap(myDataset[position].image?.planes)
         holder.textView_product_price.text = myDataset[position].price.toString()
+        holder.textView_product_price.text = myDataset[position].toString()
     }
 
     override fun getItemCount() = myDataset.size

@@ -66,12 +66,15 @@ class orderhistories : Fragment() {
 
                 texts = texts + or
             }
-            textView17.text = texts
+            //textView17.text = texts
         } else{
             orderhisto = listOf()
         }
         orderhisto = listOf()
         RecyclerViewtotal = view.findViewById<RecyclerView>(R.id.RecyclerView_order)
+        RecyclerViewtotal.layoutManager = LinearLayoutManager(requireContext())
+        RecyclerViewtotal.adapter = OrderAdapter(orderhisto)
+
 
 
 
