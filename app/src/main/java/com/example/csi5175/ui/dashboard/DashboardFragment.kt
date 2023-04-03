@@ -26,6 +26,7 @@ import com.example.csi5175.backend.model.Product
 import com.example.csi5175.backend.persistence.AppDatabase
 import com.example.csi5175.databinding.FragmentDashboardBinding
 import com.example.csi5175.productAdapter
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
@@ -58,8 +59,10 @@ class DashboardFragment : Fragment() {
         val allprice = root.findViewById<TextView>(R.id.tv_allPrice)
         val productsum = root.findViewById<TextView>(R.id.tv_allGoodsNum)
 
-        var pricenumber = 0.0//allprice.text.toString().toDouble()
+        //var pricenumber = 0.0//allprice.text.toString().toDouble()
         var productnum = 0
+
+        var dec: BigDecimal = BigDecimal.ZERO
 
         var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         myuid = sharedPref.getInt("uid", 0)
@@ -67,23 +70,23 @@ class DashboardFragment : Fragment() {
         RecyclerViewpopular.layoutManager = LinearLayoutManager(requireContext())
         myDataset = db?.userDao()?.findUserByUid(myuid)?.cart ?: listOf()//Todo: favourlist
         for(ds in myDataset){
-            pricenumber+=ds.price * ds.quantity
+            dec = dec.add(BigDecimal.valueOf(ds.price).multiply(BigDecimal(ds.quantity)))
             productnum += ds.quantity
         }
         productsum.text = "total "+productnum.toString()+ " product"
-        allprice.text = "total price: "+ pricenumber.toString()
+        allprice.text = "total price: "+ dec.toString()
         val adapter = CheckOutAdapter(myDataset,
             plusClick = {Product ->
-                pricenumber+=Product.price
+                dec = dec.add(BigDecimal.valueOf(Product.price))
                 productnum += 1
                 productsum.text = "total "+productnum.toString()+ " product"
-                allprice.text = "total price: "+ pricenumber.toString()
+                allprice.text = "total price: "+ dec.toString()
             },
             minusClick = {Product ->
-                pricenumber-=Product.price
+                dec = dec.subtract(BigDecimal.valueOf(Product.price))
                 productnum -= 1
                 productsum.text = "total "+productnum.toString()+ " product"
-                allprice.text = "total price: "+ pricenumber.toString()
+                allprice.text = "total price: "+ dec.toString()
             })
         RecyclerViewpopular.adapter = adapter
         // Set onClickListener for orderHistoryButton
@@ -100,7 +103,7 @@ class DashboardFragment : Fragment() {
             if (user != null) {
                 user.history?.let { it1 -> newhistory.addAll(it1) }
             }
-            newhistory.add(Order(uid = myuid, dateTime = Date(), list = myDataset, price = pricenumber))
+            newhistory.add(Order(uid = myuid, dateTime = Date(), list = myDataset, price = dec.toDouble()))
 
             user?.history= newhistory
             if (user != null) {
@@ -111,18 +114,18 @@ class DashboardFragment : Fragment() {
                 RecyclerViewpopular.adapter = CheckOutAdapter(myDataset,
                     plusClick = {Product ->
                         Toast.makeText(requireContext(), "plusClick", Toast.LENGTH_LONG).show()
-                        pricenumber+=Product.price
+                        dec = dec.add(BigDecimal.valueOf(Product.price))
                         productnum += 1
-                        productsum.text = "total "+productnum.toString()+ " product"
-                        allprice.text = "total price: "+ pricenumber.toString()
+                        productsum.text = "total "+dec.toString()+ " product"
+                        allprice.text = "total price: "+ dec.toString()
                     },
                     minusClick = {Product ->
 
                         Toast.makeText(requireContext(), "minusClick", Toast.LENGTH_LONG).show()
-                        pricenumber-=Product.price
+                        dec = dec.subtract(BigDecimal.valueOf(Product.price))
                         productnum -= 1
-                        productsum.text = "total "+productnum.toString()+ " product"
-                        allprice.text = "total price: "+ pricenumber.toString()
+                        productsum.text = "total "+dec.toString()+ " product"
+                        allprice.text = "total price: "+ dec.toString()
                     })
 
             }

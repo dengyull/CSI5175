@@ -70,4 +70,13 @@ class OrderControllerTest {
         orderDao.delete(54355)
         Assert.assertEquals(orderDao.getAllOrders().size, 0)
     }
+
+    @Test
+    fun testFindAllOrdersByUid() {
+        val l2 = ArrayList<Product>()
+        val order1 = Order(oid = 675, uid = 0, dateTime = Date(), price = 12312.23, list = l2)
+        val order2 = Order(oid = 565, uid = 0, dateTime = Date(), price = 12312.23, list = l2)
+        orderDao.insert(order1, order2)
+        Assert.assertEquals(orderDao.findAllOrdersByUser(0).size, 3)
+    }
 }
