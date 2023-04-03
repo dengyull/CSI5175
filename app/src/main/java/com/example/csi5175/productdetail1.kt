@@ -78,9 +78,10 @@ class productdetail1 : Fragment() {
         LikeButton.setOnClickListener {
 
             if(isin){
-                for (f in fav.indices){
+                loop@ for (f in fav.indices){
                     if(fav[f].pid==Product?.pid){
                         fav.removeAt(f)
+                        break@loop
                     }
                 }
                 user?.favorite = fav
