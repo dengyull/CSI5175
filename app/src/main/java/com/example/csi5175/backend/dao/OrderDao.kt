@@ -13,6 +13,9 @@ interface OrderDao {
     @Query("SELECT * FROM order_table")
     fun getAllOrders(): List<Order>
 
+    @Query("SELECT * FROM order_table WHERE uid =:uid")
+    fun getAllOrdersByUid(uid: Int): List<Order>
+
     @Query("SELECT * FROM order_table WHERE uid = :uid")
     fun findAllOrdersByUser(uid: Int): List<Order>
 
