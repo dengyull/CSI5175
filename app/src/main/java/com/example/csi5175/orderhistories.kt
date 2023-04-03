@@ -49,7 +49,6 @@ class orderhistories : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_orderhistories, container, false)
-        var textView17 =view.findViewById<TextView>(R.id.textView17)
 
         val db = context?.let { AppDatabase.getAppDatabase(it) }
         var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
@@ -70,8 +69,7 @@ class orderhistories : Fragment() {
         } else{
             orderhisto = listOf()
         }
-        orderhisto = listOf()
-        RecyclerViewtotal = view.findViewById<RecyclerView>(R.id.RecyclerView_order)
+        RecyclerViewtotal = view.findViewById(R.id.RecyclerView_order)
         RecyclerViewtotal.layoutManager = LinearLayoutManager(requireContext())
         RecyclerViewtotal.adapter = OrderAdapter(orderhisto)
 
