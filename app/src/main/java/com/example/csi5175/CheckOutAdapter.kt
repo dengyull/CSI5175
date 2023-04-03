@@ -1,5 +1,6 @@
 package com.example.csi5175
 
+import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.csi5175.backend.model.Product
 
 class CheckOutAdapter(private val myDataset: List<Product>,
-                      private val plusClick: (Product) -> Unit,
-                      private val minusClick: (Product) -> Unit) : RecyclerView.Adapter<CheckOutAdapter.MyViewHolder>() {
+                      private val plusClick: (Product,Int) -> Unit,
+                      private val minusClick: (Product,Int) -> Unit) : RecyclerView.Adapter<CheckOutAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val imageView: ImageView = itemView.findViewById(R.id.product_image)
@@ -43,18 +44,15 @@ class CheckOutAdapter(private val myDataset: List<Product>,
         // todo: image insert
         // holder.imageView.setImageBitmap(myDataset[position].image?.planes)
         holder.increase.setOnClickListener {
-            val num = holder.PNumber.text.toString().toInt()+1
-            holder.PNumber.setText(num.toString())
-            myDataset[position].quantity = num
-            plusClick(myDataset[position])
+            plusClick(myDataset[position],position)
+            notifyDataSetChanged()
         }
         holder.decrease.setOnClickListener {
             if(holder.PNumber.text.toString().toInt()>0){
 
-                val num = Integer.max( holder.PNumber.text.toString().toInt() - 1, 0)
-                holder.PNumber.setText(num.toString())
-                myDataset[position].quantity = num
-                minusClick(myDataset[position])
+
+                minusClick(myDataset[position],position)
+                notifyDataSetChanged()
             }
 
         }

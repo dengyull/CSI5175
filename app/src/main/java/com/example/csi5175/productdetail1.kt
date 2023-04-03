@@ -80,7 +80,17 @@ class productdetail1 : Fragment() {
             if (cart != null) {
                 shopcart.addAll(cart)
                 if (Product != null) {
-                    shopcart.add(Product)
+                    var flag = true
+                    for (p in shopcart){
+                        if(p.pid == Product.pid){
+                            p.quantity += Product.quantity
+                            flag = false
+                        }
+                    }
+                    if (flag) {
+
+                        shopcart.add(Product)
+                    }
                     user?.cart = shopcart
                     if (user != null) {
                         db?.userDao()?.updateUserInfo(user)
@@ -99,7 +109,7 @@ class productdetail1 : Fragment() {
 
         }
         DecreaseButton.setOnClickListener {
-            val num = max(productNumber.text.toString().toInt()-1,0)
+            val num = max(productNumber.text.toString().toInt()-1,1)
             productNumber.setText(num.toString())
 
         }

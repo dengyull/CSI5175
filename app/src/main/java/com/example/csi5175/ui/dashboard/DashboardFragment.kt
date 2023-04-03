@@ -1,5 +1,6 @@
 package com.example.csi5175.ui.dashboard
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -30,6 +31,7 @@ import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
 class DashboardFragment : Fragment() {
@@ -40,8 +42,9 @@ class DashboardFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var myDataset:List<Product>
+    private var myDataset = mutableListOf<Product>()
     private var myuid by Delegates.notNull<Int>()
+    private lateinit var adapter:CheckOutAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,21 +71,45 @@ class DashboardFragment : Fragment() {
         myuid = sharedPref.getInt("uid", 0)
         db = context?.let { AppDatabase.getAppDatabase(it) }
         RecyclerViewpopular.layoutManager = LinearLayoutManager(requireContext())
-        myDataset = db?.userDao()?.findUserByUid(myuid)?.cart ?: listOf()//Todo: favourlist
+        myDataset.addAll(db?.userDao()?.findUserByUid(myuid)?.cart ?: listOf())
         for(ds in myDataset){
             dec = dec.add(BigDecimal.valueOf(ds.price).multiply(BigDecimal(ds.quantity)))
             productnum += ds.quantity
         }
+
         productsum.text = "total "+productnum.toString()+ " product"
         allprice.text = "total price: "+ dec.toString()
-        val adapter = CheckOutAdapter(myDataset,
-            plusClick = {Product ->
+        adapter = CheckOutAdapter(myDataset,
+            plusClick = {Product, Position ->
+                myDataset[Position].quantity += 1
                 dec = dec.add(BigDecimal.valueOf(Product.price))
                 productnum += 1
                 productsum.text = "total "+productnum.toString()+ " product"
                 allprice.text = "total price: "+ dec.toString()
             },
-            minusClick = {Product ->
+            minusClick = {Product, Position ->
+
+                val nim =  myDataset[Position].quantity - 1
+                if(nim==0){
+
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle("Remove Item")
+                    builder.setMessage("Do you want to remove this item?")
+                    builder.setPositiveButton("ok") { dialog, which ->
+                        // Handle positive button click
+                        myDataset.removeAt(Position)
+                        not(Position)
+                    }
+                    builder.setNegativeButton("no") { dialog, which ->
+                        // Handle positive button click
+                    }
+                    val dialog = builder.create()
+                    dialog.show()
+
+
+                } else{
+                    myDataset[Position].quantity -= 1
+                }
                 dec = dec.subtract(BigDecimal.valueOf(Product.price))
                 productnum -= 1
                 productsum.text = "total "+productnum.toString()+ " product"
@@ -99,39 +126,32 @@ class DashboardFragment : Fragment() {
             //val history = db?.userDao().insertOrder()
             Toast.makeText(requireContext(), "checkoutButton", Toast.LENGTH_LONG).show()
             val user = db?.userDao()?.findUserByUid(myuid)
-            val newhistory = mutableListOf<Order>()
-            if (user != null) {
-                user.history?.let { it1 -> newhistory.addAll(it1) }
-            }
-            newhistory.add(Order(uid = myuid, dateTime = Date(), list = myDataset, price = dec.toDouble()))
+            var order = Order(uid = myuid, dateTime = Date(), list = myDataset, price = dec.toDouble())
+            db?.orderDao()?.insert(order)
+            val newhistory = db?.orderDao()?.getAllOrdersByUid(myuid) as MutableList<Order>
 
             user?.history= newhistory
             if (user != null) {
                 user.cart = mutableListOf<Product>()
                 db?.userDao()?.updateUserInfo(user)
 
-                myDataset = mutableListOf<Product>()
-                RecyclerViewpopular.adapter = CheckOutAdapter(myDataset,
-                    plusClick = {Product ->
-                        Toast.makeText(requireContext(), "plusClick", Toast.LENGTH_LONG).show()
-                        dec = dec.add(BigDecimal.valueOf(Product.price))
-                        productnum += 1
-                        productsum.text = "total "+dec.toString()+ " product"
-                        allprice.text = "total price: "+ dec.toString()
-                    },
-                    minusClick = {Product ->
-
-                        Toast.makeText(requireContext(), "minusClick", Toast.LENGTH_LONG).show()
-                        dec = dec.subtract(BigDecimal.valueOf(Product.price))
-                        productnum -= 1
-                        productsum.text = "total "+dec.toString()+ " product"
-                        allprice.text = "total price: "+ dec.toString()
-                    })
+                myDataset.clear()
+                adapter.notifyDataSetChanged()
+                dec = BigDecimal.valueOf(0)
+                productnum = 0
+                productsum.text = "total "+productnum.toString()+ " product"
+                allprice.text = "total price: "+ dec.toString()
 
             }
 
         }
         return root
+    }
+
+    fun not(Position:Int){
+
+        adapter.notifyItemRemoved(Position)
+        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {
