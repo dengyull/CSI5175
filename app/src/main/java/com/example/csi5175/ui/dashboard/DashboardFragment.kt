@@ -1,25 +1,47 @@
 package com.example.csi5175.ui.dashboard
 
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.csi5175.CheckOutAdapter
+import com.example.csi5175.ProductDetails
 import com.example.csi5175.R
+import com.example.csi5175.backend.model.Order
+import com.example.csi5175.backend.model.Product
+import com.example.csi5175.backend.persistence.AppDatabase
 import com.example.csi5175.databinding.FragmentDashboardBinding
+import com.example.csi5175.productAdapter
+import java.math.BigDecimal
+import java.time.LocalDate
+import java.time.LocalTime
+import java.util.*
+import kotlin.properties.Delegates
 
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 
+    private var db:AppDatabase? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var myDataset:List<Product>
+    private var myuid by Delegates.notNull<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,44 +54,96 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        /*val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }*/
-    // Find views by their IDs
-        val orderHistoryButton =root.findViewById<Button>(R.id.button_orderhistory)
-        val restaurantTitleTextView = root.findViewById<TextView>(R.id.restaurant_title)
-        val priceTextView = root.findViewById<TextView>(R.id.price)
-        val cartCardView = root.findViewById<CardView>(R.id.cart_card)
-        val detailsRestaurantTitle = root.findViewById<TextView>(R.id.details_restaurant_title)
-        val detailsFood = root.findViewById<TextView>(R.id.details_food)
-        val totalPrice = root.findViewById<TextView>(R.id.Total_price)
-        val checkoutButton = root.findViewById<Button>(R.id.button_checkout)
+        val checkoutButton = root.findViewById<Button>(R.id.btn_commit_checkout)
+        val RecyclerViewpopular = root.findViewById<RecyclerView>(R.id.RecyclerView_checkout)
+        val allprice = root.findViewById<TextView>(R.id.tv_allPrice)
+        val productsum = root.findViewById<TextView>(R.id.tv_allGoodsNum)
 
-        val showdetails_button = root.findViewById<ImageView>(R.id.showdetails_button)
-        val details_card = root.findViewById<CardView>(R.id.details_card)
-        showdetails_button.setOnClickListener {
-            // 将details_card设置为可见
-            details_card.visibility = View.VISIBLE
-            detailsRestaurantTitle.text = restaurantTitleTextView.text
-            // Set detailsFood text
-            detailsFood.text = "Food details here!"
-            // Set totalPrice text
-            totalPrice.text = priceTextView.text
+        //var pricenumber = 0.0//allprice.text.toString().toDouble()
+        var productnum = 0
+
+        var dec: BigDecimal = BigDecimal.ZERO
+
+        var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        myuid = sharedPref.getInt("uid", 0)
+        db = context?.let { AppDatabase.getAppDatabase(it) }
+        RecyclerViewpopular.layoutManager = LinearLayoutManager(requireContext())
+        myDataset = db?.userDao()?.findUserByUid(myuid)?.cart ?: listOf()//Todo: favourlist
+        for(ds in myDataset){
+            dec = dec.add(BigDecimal.valueOf(ds.price).multiply(BigDecimal(ds.quantity)))
+            productnum += ds.quantity
         }
+        productsum.text = "total "+productnum.toString()+ " product"
+        allprice.text = "total price: "+ dec.toString()
+        val adapter = CheckOutAdapter(myDataset,
+            plusClick = {Product ->
+                dec = dec.add(BigDecimal.valueOf(Product.price))
+                productnum += 1
+                productsum.text = "total "+productnum.toString()+ " product"
+                allprice.text = "total price: "+ dec.toString()
+            },
+            minusClick = {Product ->
+                dec = dec.subtract(BigDecimal.valueOf(Product.price))
+                productnum -= 1
+                productsum.text = "total "+productnum.toString()+ " product"
+                allprice.text = "total price: "+ dec.toString()
+            })
+        RecyclerViewpopular.adapter = adapter
         // Set onClickListener for orderHistoryButton
-        orderHistoryButton.setOnClickListener {
-            // Handle button click
-        }
+
         // Set onClickListener for checkoutButton
         checkoutButton.setOnClickListener {
             // Handle button click
+            //todo: clear cart and inser to history
+            //
+            //val history = db?.userDao().insertOrder()
+            Toast.makeText(requireContext(), "checkoutButton", Toast.LENGTH_LONG).show()
+            val user = db?.userDao()?.findUserByUid(myuid)
+            val newhistory = mutableListOf<Order>()
+            if (user != null) {
+                user.history?.let { it1 -> newhistory.addAll(it1) }
+            }
+            newhistory.add(Order(uid = myuid, dateTime = Date(), list = myDataset, price = dec.toDouble()))
+
+            user?.history= newhistory
+            if (user != null) {
+                user.cart = mutableListOf<Product>()
+                db?.userDao()?.updateUserInfo(user)
+
+                myDataset = mutableListOf<Product>()
+                RecyclerViewpopular.adapter = CheckOutAdapter(myDataset,
+                    plusClick = {Product ->
+                        Toast.makeText(requireContext(), "plusClick", Toast.LENGTH_LONG).show()
+                        dec = dec.add(BigDecimal.valueOf(Product.price))
+                        productnum += 1
+                        productsum.text = "total "+dec.toString()+ " product"
+                        allprice.text = "total price: "+ dec.toString()
+                    },
+                    minusClick = {Product ->
+
+                        Toast.makeText(requireContext(), "minusClick", Toast.LENGTH_LONG).show()
+                        dec = dec.subtract(BigDecimal.valueOf(Product.price))
+                        productnum -= 1
+                        productsum.text = "total "+dec.toString()+ " product"
+                        allprice.text = "total price: "+ dec.toString()
+                    })
+
+            }
+
         }
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        val user = db?.userDao()?.findUserByUid(myuid)
+        if (user != null) {
+            user.cart = myDataset
+            db?.userDao()?.updateUserInfo(user)
+
+        }
+
         _binding = null
     }
 }

@@ -10,6 +10,7 @@
         android:id="@+id/navigation_browse"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/browse" />
+
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/cart"

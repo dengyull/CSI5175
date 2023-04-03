@@ -1,15 +1,27 @@
 package com.example.csi5175
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.csi5175.backend.model.Product
+import com.example.csi5175.backend.persistence.AppDatabase
 import com.example.csi5175.databinding.FragmentBrowseBinding
 import com.example.csi5175.databinding.FragmentHomeBinding
 import com.example.csi5175.databinding.FragmentNotificationsBinding
@@ -54,27 +66,6 @@ class browse : Fragment() {
         browseViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }*/
-        val searchBar = root.findViewById<EditText>(R.id.search_bar)
-        val searchIcon = root.findViewById<ImageView>(R.id.search_icon)
-        val imageCategory = root.findViewById<ImageView>(R.id.imageCategory)
-        val textCategory = root.findViewById<TextView>(R.id.textCategory)
-
-        // Set up the search listener
-        searchIcon.setOnClickListener {
-            val searchTerm = searchBar.text.toString()
-            // Perform the search
-        }
-
-        imageCategory.setOnClickListener {
-            // Open new activity when imageCategory is clicked
-
-        }
-
-        textCategory.setOnClickListener {
-            // Open new activity when textCategory is clicked
-
-        }
-
 
 
         return root
@@ -103,4 +94,6 @@ class browse : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

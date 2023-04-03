@@ -38,13 +38,7 @@ class MainActivity2 : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
-        button = findViewById(R.id.button2)
-        button.isVisible = false
-        button.setOnClickListener {
-            finish()
-        }
-
-
-
     }
+
+
 }

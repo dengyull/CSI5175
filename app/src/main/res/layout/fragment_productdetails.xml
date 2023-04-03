@@ -61,6 +61,12 @@
                             android:layout_height="79dp"
                             android:text="some descriptions..."
                             android:textSize="16sp" />
+
+                        <ImageButton
+                            android:id="@+id/imageButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/shareicon" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>

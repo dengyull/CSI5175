@@ -1,13 +1,21 @@
 package com.example.csi5175
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import com.example.csi5175.backend.model.Product
 import com.example.csi5175.databinding.FragmentBrowseBinding
+import java.io.ByteArrayOutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,8 +46,9 @@ class ProductDetails : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_productdetails, container, false)
         _binding = FragmentBrowseBinding.inflate(inflater,container,false)
+        val view = inflater.inflate(R.layout.fragment_productdetails, container, false)
+
         val root: View = binding.root
 
         val ProductDetailsImage = root.findViewById<ImageView>(R.id.image_product_details)
@@ -47,9 +56,29 @@ class ProductDetails : Fragment() {
         val ProductDetailsPrice= root.findViewById<TextView>(R.id.productdetails_price)
         val ProductDetailsDescription = root.findViewById<TextView>(R.id.productdetails_description)
 
-        val buttonIncrease = root.findViewById<ImageView>(R.id.button_increase)
-        val buttonDecrease = root.findViewById<ImageView>(R.id.button_Decrease)
-        val buttonAddToCart = root.findViewById<ImageView>(R.id.button_addtocart)
+        val buttonIncrease = view.findViewById<ImageView>(R.id.button_increase)
+        val buttonDecrease = view.findViewById<ImageView>(R.id.button_Decrease)
+        val buttonAddToCart = view.findViewById<Button>(R.id.button_addtocart)
+        val shareButtons = view.findViewById<ImageButton>(R.id.imageButton)
+        shareButtons.setOnClickListener{
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, "https://www.example.com")
+            startActivity(Intent.createChooser(intent, "Share link via"))
+
+            /*val bitmap = BitmapFactory.decodeResource(resources, R.drawable.cart)
+
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "image/"
+            //intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile))
+            intent.setPackage("com.instagram.android")
+            try {
+                context?.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(context, "Instagram not installed", Toast.LENGTH_SHORT).show()
+            }*/
+        }
+
         // Set an onClick listener to the button
         buttonIncrease.setOnClickListener {
 
@@ -60,6 +89,13 @@ class ProductDetails : Fragment() {
         buttonAddToCart.setOnClickListener {
 
         }
+        return inflater.inflate(R.layout.fragment_productdetails, container, false)
+    }
+    fun getImageUri(context: Context, image: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(context.contentResolver, image, "Title", null)
+        return Uri.parse(path)
     }
 
     companion object {
