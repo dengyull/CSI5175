@@ -49,11 +49,14 @@ class CheckOutAdapter(private val myDataset: List<Product>,
             plusClick(myDataset[position])
         }
         holder.decrease.setOnClickListener {
+            if(holder.PNumber.text.toString().toInt()>0){
 
-            val num = Integer.max( holder.PNumber.text.toString().toInt() - 1, 0)
-            holder.PNumber.setText(num.toString())
-            myDataset[position].quantity = num
-            minusClick(myDataset[position])
+                val num = Integer.max( holder.PNumber.text.toString().toInt() - 1, 0)
+                holder.PNumber.setText(num.toString())
+                myDataset[position].quantity = num
+                minusClick(myDataset[position])
+            }
+
         }
         holder.PNumber.setText( myDataset[position].quantity.toString())
         holder.textView_product_name.text = myDataset[position].pname

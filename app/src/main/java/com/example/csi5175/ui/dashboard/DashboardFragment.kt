@@ -74,15 +74,12 @@ class DashboardFragment : Fragment() {
         allprice.text = "total price: "+ pricenumber.toString()
         val adapter = CheckOutAdapter(myDataset,
             plusClick = {Product ->
-                Toast.makeText(requireContext(), "plusClick", Toast.LENGTH_LONG).show()
                 pricenumber+=Product.price
                 productnum += 1
                 productsum.text = "total "+productnum.toString()+ " product"
                 allprice.text = "total price: "+ pricenumber.toString()
             },
             minusClick = {Product ->
-
-                Toast.makeText(requireContext(), "minusClick", Toast.LENGTH_LONG).show()
                 pricenumber-=Product.price
                 productnum -= 1
                 productsum.text = "total "+productnum.toString()+ " product"

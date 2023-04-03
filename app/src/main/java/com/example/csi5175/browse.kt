@@ -66,80 +66,11 @@ class browse : Fragment() {
         browseViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }*/
-        val searchBar = root.findViewById<EditText>(R.id.search_bar)
-        val searchIcon = root.findViewById<ImageView>(R.id.search_icon)
-        val RecyclerViewtotal = root.findViewById<RecyclerView>(R.id.RecyclerView_total)
-        val db = context?.let { AppDatabase.getAppDatabase(it) }
 
-
-        RecyclerViewtotal.layoutManager = LinearLayoutManager(requireContext())
-        val myDataset:List<Product> = db?.productDao()?.getAllProduct() ?: listOf()//Todo: favourlist
-        Log.v("database", myDataset.toString())
-        //val adapter = productAdapter(myDataset){item}
-        //RecyclerViewtotal.adapter = adapter
-
-        // Set up the search listener
-        searchIcon.setOnClickListener {
-            val searchTerm = searchBar.text.toString()
-            // Perform the search
-        }
-        root.findViewById<Button>(R.id.button3).setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_browse_to_productdetail1)
-        }
-
-
-
-        val textWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // This method is called before the text is changed
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // This method is called when the text is changed
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                // This method is called after the text is changed
-                performSearch(searchBar.text.toString())
-            }
-        }
-
-        searchBar.addTextChangedListener(textWatcher)
-        searchIcon.setOnClickListener {
-            //val searchTerm = searchBar.text.toString()
-            // Perform the search
-            startVoiceInput()
-        }
 
         return root
     }
 
-    private fun startVoiceInput() {
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(
-            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-        )
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now")
-        resultLauncher.launch(intent)
-    }
-
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // There are no request codes
-            val data: Intent? = result.data
-            val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            val spokenText = result!![0]
-            binding.searchBar.setText(spokenText)
-            // todo: start search
-
-        }
-    }
-    fun performSearch(str: String) {
-        Log.v("search", str)
-
-
-    }
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -163,4 +94,6 @@ class browse : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }
