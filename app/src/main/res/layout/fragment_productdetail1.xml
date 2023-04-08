@@ -57,6 +57,12 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/productdetails_calories"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="TextView" />
+
+                        <TextView
                             android:id="@+id/productdetails_description"
                             android:layout_width="match_parent"
                             android:layout_height="79dp"

@@ -52,6 +52,8 @@ class productdetail1 : Fragment() {
 
         var Productname = view.findViewById<TextView>(R.id.productdetails_name)
         var productprice = view.findViewById<TextView>(R.id.productdetails_price)
+        var calories = view.findViewById<TextView>(R.id.productdetails_calories)
+
         var productNumber = view.findViewById<EditText>(R.id.productNumber)
         var productdescription = view.findViewById<TextView>(R.id.productdetails_description)
         var ShareButton = view.findViewById<ImageButton>(R.id.productShareButton)
@@ -109,6 +111,15 @@ class productdetail1 : Fragment() {
 
         }
         Productname.text = Product?.pname
+        if(Product?.calories?.size == 1){
+            calories.text = "calories above " + Product?.calories?.get(0).toString()
+        } else if(Product?.calories?.size == 2) {
+
+            calories.text = "calories above " + Product?.calories?.get(0).toString() + " to " + Product?.calories?.get(1).toString()
+        } else {
+            calories.text = "calories above 0"
+
+        }
         productprice.text = Product?.price.toString()
         productdescription.text = Product?.description
         ShareButton.setOnClickListener {
