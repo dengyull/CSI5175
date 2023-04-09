@@ -24,13 +24,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                     android:layout_weight="1"
                     android:id="@+id/tv_allPrice"
                     android:textColor="@android:color/holo_red_dark"
-                    android:text="总价：17.0元"/>
+                    android:text="price：17.0"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -47,6 +47,13 @@
                     android:id="@+id/tv_allGoodsNum"
                     android:layout_weight="1"
                     android:text="total prodoct"/>
+
+                <TextView
+                    android:id="@+id/tv_calories"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="calories" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,12 +68,6 @@
                     android:text="Checkout"/>
             </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:orientation="vertical"></LinearLayout>
 
     </LinearLayout>
 

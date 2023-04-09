@@ -64,6 +64,9 @@ class DashboardFragment : Fragment() {
 
         //var pricenumber = 0.0//allprice.text.toString().toDouble()
         var productnum = 0
+        var totalcal1 = 0.0
+        var totalcal2 = 0.0
+        val calories = root.findViewById<TextView>(R.id.tv_calories)
 
         var dec: BigDecimal = BigDecimal.ZERO
 
@@ -75,7 +78,24 @@ class DashboardFragment : Fragment() {
         for(ds in myDataset){
             dec = dec.add(BigDecimal.valueOf(ds.price).multiply(BigDecimal(ds.quantity)))
             productnum += ds.quantity
+            if(ds?.calories?.size == 1){
+                totalcal1 += ds?.calories?.get(0)!!
+                totalcal2 += ds?.calories?.get(0)!!
+            } else if(ds?.calories?.size == 2) {
+                totalcal1 += ds?.calories?.get(0)!!
+                totalcal2 += ds?.calories?.get(1)!!
+            } else {
+            }
         }
+
+        if(totalcal1 == 0.0 && totalcal2==0.0) {
+            calories.text = "calories above 0"
+        } else if(totalcal2==0.0) {
+            calories.text = "calories above " + totalcal1
+        } else {
+            calories.text = "calories above " + totalcal1 + " to " + totalcal2
+        }
+
 
         productsum.text = "total "+productnum.toString()+ " product"
         allprice.text = "total price: "+ dec.toString()
@@ -141,6 +161,7 @@ class DashboardFragment : Fragment() {
                 productnum = 0
                 productsum.text = "total "+productnum.toString()+ " product"
                 allprice.text = "total price: "+ dec.toString()
+                calories.text = "calories above 0"
 
             }
 
