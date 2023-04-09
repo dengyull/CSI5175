@@ -44,7 +44,7 @@ class productAdapter(private val myDataset: List<Product>,
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        myDataset[position].image?.planes
+        // myDataset[position].image?.planes
         // todo: image insert
         //holder.imageView.setImageDrawable(myDataset[position].image?.planes)
         holder.imageView.setOnClickListener { addClick(myDataset[position]) }
