@@ -22,8 +22,8 @@ data class Product (
     var price: Double,
     @ColumnInfo
     var description: String,
-    @ColumnInfo
-    var image: Image?,
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    var image: ByteArray?,
     @ColumnInfo
     var category: String,
     @ColumnInfo

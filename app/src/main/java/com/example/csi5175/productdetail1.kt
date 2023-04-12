@@ -52,15 +52,74 @@ class productdetail1 : Fragment() {
 
         var Productname = view.findViewById<TextView>(R.id.productdetails_name)
         var productprice = view.findViewById<TextView>(R.id.productdetails_price)
+        var calories = view.findViewById<TextView>(R.id.productdetails_calories)
+
         var productNumber = view.findViewById<EditText>(R.id.productNumber)
         var productdescription = view.findViewById<TextView>(R.id.productdetails_description)
         var ShareButton = view.findViewById<ImageButton>(R.id.productShareButton)
+        var LikeButton = view.findViewById<ImageButton>(R.id.btn_like)
         var DecreaseButton = view.findViewById<ImageView>(R.id.button_Decrease)
         var increaseButton = view.findViewById<ImageView>(R.id.button_increase)
         var InButton = view.findViewById<Button>(R.id.button_addtocart)
 
         var Product = pid?.let { db?.productDao()?.findProductByPid(it) }
+        var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        val myuid = sharedPref.getInt("uid", 0)
+        val user = db?.userDao()?.findUserByUid(myuid)
+        var isin = false
+        var fav = mutableListOf<Product>()
+        user?.favorite?.let { fav.addAll(it) }
+        if (fav != null) {
+            for(f in fav){
+                if (f.pid == Product?.pid){
+                    LikeButton.setImageResource(android.R.drawable.btn_star_big_on)
+                    isin = true
+                }
+            }
+        }
+        LikeButton.setOnClickListener {
+
+            if(isin){
+                loop@ for (f in fav.indices){
+                    if(fav[f].pid==Product?.pid){
+                        fav.removeAt(f)
+                        break@loop
+                    }
+                }
+                user?.favorite = fav
+                if (user != null) {
+                    db?.userDao()?.updateUserInfo(user)
+                    LikeButton.setImageResource(android.R.drawable.btn_star_big_off)
+                    Toast.makeText(requireContext(), "UnLike"+myuid.toString(), Toast.LENGTH_LONG).show()
+                    isin = false
+
+                }
+            } else {
+                if (Product != null) {
+                    fav.add(Product)
+                    user?.favorite = fav
+                    if (user != null) {
+                        db?.userDao()?.updateUserInfo(user)
+                    }
+
+                    isin = true
+                    Toast.makeText(requireContext(), "Like"+myuid.toString(), Toast.LENGTH_LONG).show()
+                    LikeButton.setImageResource(android.R.drawable.btn_star_big_on)
+
+                }
+            }
+
+        }
         Productname.text = Product?.pname
+        if(Product?.calories?.size == 1){
+            calories.text = "calories above " + Product?.calories?.get(0).toString()
+        } else if(Product?.calories?.size == 2) {
+
+            calories.text = "calories above " + Product?.calories?.get(0).toString() + " to " + Product?.calories?.get(1).toString()
+        } else {
+            calories.text = "calories above 0"
+
+        }
         productprice.text = Product?.price.toString()
         productdescription.text = Product?.description
         ShareButton.setOnClickListener {
@@ -72,15 +131,22 @@ class productdetail1 : Fragment() {
         }
         InButton.setOnClickListener {
             Product?.quantity = productNumber.text.toString().toInt()
-            var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-            val myuid = sharedPref.getInt("uid", 0)
-            val user = db?.userDao()?.findUserByUid(myuid)
             var cart = user?.cart
             val shopcart = mutableListOf<Product>()
             if (cart != null) {
                 shopcart.addAll(cart)
                 if (Product != null) {
-                    shopcart.add(Product)
+                    var flag = true
+                    for (p in shopcart){
+                        if(p.pid == Product.pid){
+                            p.quantity += Product.quantity
+                            flag = false
+                        }
+                    }
+                    if (flag) {
+
+                        shopcart.add(Product)
+                    }
                     user?.cart = shopcart
                     if (user != null) {
                         db?.userDao()?.updateUserInfo(user)
@@ -99,7 +165,7 @@ class productdetail1 : Fragment() {
 
         }
         DecreaseButton.setOnClickListener {
-            val num = max(productNumber.text.toString().toInt()-1,0)
+            val num = max(productNumber.text.toString().toInt()-1,1)
             productNumber.setText(num.toString())
 
         }

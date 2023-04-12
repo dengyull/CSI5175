@@ -1,17 +1,24 @@
 package com.example.csi5175.backend
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.platform.app.InstrumentationRegistry
 import com.example.csi5175.backend.dao.MerchantDao
 import com.example.csi5175.backend.dao.ProductDao
 import com.example.csi5175.backend.model.Address
 import com.example.csi5175.backend.model.Merchant
 import com.example.csi5175.backend.model.Product
 import com.example.csi5175.backend.persistence.AppDatabase
+import com.example.csi5175.test.R
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import java.io.ByteArrayOutputStream
 
 class ProductControllerTest {
     lateinit var db: AppDatabase
@@ -127,5 +134,29 @@ class ProductControllerTest {
         Assert.assertEquals(productDao.findProductByPid(34).sold, 2)
         productDao.addSoldById(34)
         Assert.assertEquals(productDao.findProductByPid(34).sold, 3)
+    }
+
+    @Test
+    fun testAddImage() {
+        // get context first
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        // image -> bytearray
+        val bitmap = BitmapFactory.decodeResource(context.resources, com.example.csi5175.R.drawable.images)
+        bitmap.density
+        val stream = ByteArrayOutputStream()
+        // Depend on the format of the image
+        // second parameter means the quality of image
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val imageInByte = stream.toByteArray()
+
+        val product3 = Product(pid = 78, mid = 1, image = imageInByte, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 3)
+        productDao.insert(product3)
+
+        // bytearray -> image
+        val retrievedProduct = productDao.findProductByPid(78)
+        val imageBytes = retrievedProduct.image
+        val newBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes!!.size)
+        val newDrawable = BitmapDrawable(context.resources, newBitmap)
+
     }
 }
