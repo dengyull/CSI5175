@@ -34,10 +34,13 @@ class ProductControllerTest {
         productDao = db.productDao()
         val labelList1 = ArrayList<String>()
         val labelList2 = ArrayList<String>()
+        val labelList3 = ArrayList<String>()
         labelList1.add("good")
         labelList1.add("electronic")
         labelList2.add("watch")
         labelList2.add("usa")
+        labelList3.add("food")
+        labelList3.add("beverage")
         val calories1 = ArrayList<Double>()
         val calories2 = ArrayList<Double>()
         calories1.add(123.0)
@@ -46,6 +49,15 @@ class ProductControllerTest {
         calories2.add(0.0)
         val product1 = Product(pid = 12, mid = 1, image = null, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = labelList1, calories = calories1, sold = 1)
         val product2 = Product(pid = 34, mid = 2, image = null, pname = "watch", description = "good watch", category = "electronic", quantity = 20, price = 123.2, label = labelList2, calories = calories2, sold = 2)
+
+        val product3 = Product(pid = 59, mid = 2, image = null, pname = "pizza", description = "good for eat by adding bacon and oliver", category = "food", quantity = 20, price = 12.4, label = labelList3, calories = calories1, sold = 7)
+        val product4 = Product(pid = 60, mid = 2, image = null, pname = "burger", description = "Add cheese and lettuce, you best choice", category = "food", quantity = 20, price = 10.2, label = labelList3, calories = calories1, sold = 4)
+        val product5 = Product(pid = 63, mid = 2, image = null, pname = "steak", description = "Best cow in USA", category = "food", quantity = 20, price = 120.2, label = labelList3, calories = calories1, sold = 1)
+
+        val product6 = Product(pid = 61, mid = 2, image = null, pname = "Ginger Ale", description = "Canada dry", category = "beverage", quantity = 20, price = 2.5, label = labelList3, calories = calories2, sold = 12)
+        val product7 = Product(pid = 62, mid = 2, image = null, pname = "Pepsi", description = "Best coke in the World", category = "beverage", quantity = 20, price = 2.5, label = labelList3, calories = calories2, sold = 12)
+        val product8 = Product(pid = 64, mid = 2, image = null, pname = "Root beer", description = "Famous beverage in the world", category = "beverage", quantity = 20, price = 2.5, label = labelList3, calories = calories2, sold = 12)
+
         merchantDao = db.merchantDao()
         val l1 = ArrayList<Product>()
         val l2 = ArrayList<Product>()
@@ -150,6 +162,14 @@ class ProductControllerTest {
         val imageInByte = stream.toByteArray()
 
         val product3 = Product(pid = 78, mid = 1, image = imageInByte, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 3)
+        val product9 = Product(pid = 59, mid = 2, image = imageInByte, pname = "pizza", description = "good for eat by adding bacon and oliver", category = "food", quantity = 20, price = 12.4, label = null, calories = null, sold = 7)
+        val product4 = Product(pid = 60, mid = 2, image = imageInByte, pname = "burger", description = "Add cheese and lettuce, you best choice", category = "food", quantity = 20, price = 10.2, label = null, calories = null, sold = 4)
+        val product5 = Product(pid = 63, mid = 2, image = imageInByte, pname = "steak", description = "Best cow in USA", category = "food", quantity = 20, price = 120.2, label = null, calories = null, sold = 1)
+
+        val product6 = Product(pid = 61, mid = 2, image = imageInByte, pname = "Ginger Ale", description = "Canada dry", category = "beverage", quantity = 20, price = 2.5, label = null, calories = null, sold = 12)
+        val product7 = Product(pid = 62, mid = 2, image = imageInByte, pname = "Pepsi", description = "Best coke in the World", category = "beverage", quantity = 20, price = 2.5, label = null, calories = null, sold = 12)
+        val product8 = Product(pid = 64, mid = 2, image = imageInByte, pname = "Root beer", description = "Famous beverage in the world", category = "beverage", quantity = 20, price = 2.5, label = null, calories = null, sold = 12)
+
         productDao.insert(product3)
 
         // bytearray -> image
