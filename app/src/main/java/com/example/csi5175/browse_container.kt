@@ -1,6 +1,8 @@
 package com.example.csi5175
 
 import android.app.Activity
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
@@ -16,6 +18,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.NotificationCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -82,9 +85,10 @@ class browse_container : Fragment() {
         }
         root.findViewById<Button>(R.id.button3).setOnClickListener {
 
+            showNotification()
         }
 
-        root.findViewById<Button>(R.id.button3).isVisible = false
+        //root.findViewById<Button>(R.id.button3).isVisible = false
 
 
         val textWatcher = object : TextWatcher {
@@ -195,6 +199,20 @@ class browse_container : Fragment() {
             }
         )
     }
+
+    fun showNotification() {
+        val notification = NotificationCompat.Builder(requireContext(), "channel_id")
+            .setContentTitle("Title")
+            .setContentText("Message")
+            .setSmallIcon(androidx.core.R.drawable.notification_action_background)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        val notificationManager =
+            requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(1, notification)
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
