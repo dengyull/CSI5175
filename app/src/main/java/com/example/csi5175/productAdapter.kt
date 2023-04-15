@@ -1,5 +1,8 @@
 package com.example.csi5175
 
+import android.app.Activity
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi5175.backend.model.Product
+import android.content.Context
+import androidx.core.content.ContextCompat
 
 class productAdapter(private val myDataset: List<Product>,
                      private val listener: OnItemClickListener,
@@ -47,6 +52,10 @@ class productAdapter(private val myDataset: List<Product>,
         // myDataset[position].image?.planes
         // todo: image insert
         //holder.imageView.setImageDrawable(myDataset[position].image?.planes)
+        print("mydataset size")
+        print(myDataset.size)
+        val imageId = myDataset[position].image
+        holder.imageView.setImageDrawable(ContextCompat.getDrawable(appContext, imageId!!))
         holder.imageView.setOnClickListener { addClick(myDataset[position]) }
         holder.textView_product_name.text = myDataset[position].pname
         holder.textView_product_price.text = myDataset[position].price.toString()
