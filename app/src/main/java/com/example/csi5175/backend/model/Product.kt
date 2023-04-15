@@ -1,6 +1,7 @@
 package com.example.csi5175.backend.model
 
 import android.media.Image
+import androidx.annotation.DrawableRes
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -22,8 +23,8 @@ data class Product (
     var price: Double,
     @ColumnInfo
     var description: String,
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    var image: ByteArray?,
+    @DrawableRes
+    var image: Int?,
     @ColumnInfo
     var category: String,
     @ColumnInfo

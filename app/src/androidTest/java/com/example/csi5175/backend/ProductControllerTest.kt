@@ -136,27 +136,4 @@ class ProductControllerTest {
         Assert.assertEquals(productDao.findProductByPid(34).sold, 3)
     }
 
-    @Test
-    fun testAddImage() {
-        // get context first
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        // image -> bytearray
-        val bitmap = BitmapFactory.decodeResource(context.resources, com.example.csi5175.R.drawable.images)
-        bitmap.density
-        val stream = ByteArrayOutputStream()
-        // Depend on the format of the image
-        // second parameter means the quality of image
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val imageInByte = stream.toByteArray()
-
-        val product3 = Product(pid = 78, mid = 1, image = imageInByte, pname = "camera", description = "good cam", category = "electronic", quantity = 20, price = 43123.1, label = null, calories = null, sold = 3)
-        productDao.insert(product3)
-
-        // bytearray -> image
-        val retrievedProduct = productDao.findProductByPid(78)
-        val imageBytes = retrievedProduct.image
-        val newBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes!!.size)
-        val newDrawable = BitmapDrawable(context.resources, newBitmap)
-
-    }
 }
