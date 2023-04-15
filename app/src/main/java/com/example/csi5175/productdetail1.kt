@@ -2,6 +2,7 @@ package com.example.csi5175
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.csi5175.backend.model.Product
 import com.example.csi5175.backend.persistence.AppDatabase
 import java.lang.Integer.max
@@ -60,6 +62,7 @@ class productdetail1 : Fragment() {
         var LikeButton = view.findViewById<ImageButton>(R.id.btn_like)
         var DecreaseButton = view.findViewById<ImageView>(R.id.button_Decrease)
         var increaseButton = view.findViewById<ImageView>(R.id.button_increase)
+        var image_product_details = view.findViewById<ImageView>(R.id.image_product_details)
         var InButton = view.findViewById<Button>(R.id.button_addtocart)
 
         var Product = pid?.let { db?.productDao()?.findProductByPid(it) }
@@ -77,6 +80,8 @@ class productdetail1 : Fragment() {
                 }
             }
         }
+        val imageId = Product?.image
+        image_product_details.setImageDrawable(ContextCompat.getDrawable(appContext, imageId!!))
         LikeButton.setOnClickListener {
 
             if(isin){
@@ -123,10 +128,17 @@ class productdetail1 : Fragment() {
         productprice.text = Product?.price.toString()
         productdescription.text = Product?.description
         ShareButton.setOnClickListener {
+            /*
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, Product?.pname+": "+Product?.description)
-            startActivity(Intent.createChooser(intent, "Share Product via"))
+            startActivity(Intent.createChooser(intent, "Share Product via"))*/
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "image/*"
+            val uri = Uri.parse("android.resource://com.example.csi5175/" + imageId) // Replace your.package.name with your app's package name
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            startActivity(Intent.createChooser(intent, "Share Product Image via"))
+
 
         }
         InButton.setOnClickListener {

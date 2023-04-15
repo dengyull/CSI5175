@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -79,18 +78,17 @@ class DashboardFragment : Fragment() {
             dec = dec.add(BigDecimal.valueOf(ds.price).multiply(BigDecimal(ds.quantity)))
             productnum += ds.quantity
             if(ds?.calories?.size == 1){
-                totalcal1 += ds?.calories?.get(0)!!
-                totalcal2 += ds?.calories?.get(0)!!
+                totalcal1 += ds?.calories?.get(0)!!*ds.quantity
+                totalcal1 += ds?.calories?.get(0)!!*ds.quantity
             } else if(ds?.calories?.size == 2) {
-                totalcal1 += ds?.calories?.get(0)!!
-                totalcal2 += ds?.calories?.get(1)!!
-            } else {
+                totalcal1 += ds?.calories?.get(0)!!*ds.quantity
+                totalcal2 += ds?.calories?.get(1)!!*ds.quantity
             }
         }
 
         if(totalcal1 == 0.0 && totalcal2==0.0) {
             calories.text = "calories above 0"
-        } else if(totalcal2==0.0) {
+        } else if(totalcal2.equals(totalcal1)) {
             calories.text = "calories above " + totalcal1
         } else {
             calories.text = "calories above " + totalcal1 + " to " + totalcal2
@@ -106,6 +104,21 @@ class DashboardFragment : Fragment() {
                 productnum += 1
                 productsum.text = "total "+productnum.toString()+ " product"
                 allprice.text = "total price: "+ dec.toString()
+
+                if(myDataset[Position].calories?.size == 1){
+                    totalcal1 += myDataset[Position].calories?.get(0)!!
+                    totalcal2 += myDataset[Position].calories?.get(0)!!
+                } else if(myDataset[Position].calories?.size == 2) {
+                    totalcal1 += myDataset[Position].calories?.get(0)!!
+                    totalcal2 += myDataset[Position].calories?.get(1)!!
+                }
+                if(totalcal1 == 0.0 && totalcal2==0.0) {
+                    calories.text = "calories above 0"
+                } else if(totalcal2.equals(totalcal1)) {
+                    calories.text = "calories above " + totalcal1
+                } else {
+                    calories.text = "calories above " + totalcal1 + " to " + totalcal2
+                }
             },
             minusClick = {Product, Position ->
 
@@ -117,8 +130,28 @@ class DashboardFragment : Fragment() {
                     builder.setMessage("Do you want to remove this item?")
                     builder.setPositiveButton("ok") { dialog, which ->
                         // Handle positive button click
+
+                        if(myDataset[Position].calories?.size == 1){
+                            totalcal1 -= myDataset[Position].calories?.get(0)!!
+                            totalcal2 -= myDataset[Position].calories?.get(0)!!
+                        } else if(myDataset[Position].calories?.size == 2) {
+                            totalcal1 -= myDataset[Position].calories?.get(0)!!
+                            totalcal2 -= myDataset[Position].calories?.get(1)!!
+                        }
+                        if(totalcal1 == 0.0 && totalcal2==0.0) {
+                            calories.text = "calories above 0"
+                        } else if(totalcal2.equals(totalcal1)) {
+                            calories.text = "calories above " + totalcal1
+                        } else {
+                            calories.text = "calories above " + totalcal1 + " to " + totalcal2
+                        }
                         myDataset.removeAt(Position)
                         not(Position)
+                        dec = dec.subtract(BigDecimal.valueOf(Product.price))
+                        productnum -= 1
+                        productsum.text = "total "+productnum.toString()+ " product"
+                        allprice.text = "total price: "+ dec.toString()
+
                     }
                     builder.setNegativeButton("no") { dialog, which ->
                         // Handle positive button click
@@ -129,40 +162,52 @@ class DashboardFragment : Fragment() {
 
                 } else{
                     myDataset[Position].quantity -= 1
+                    dec = dec.subtract(BigDecimal.valueOf(Product.price))
+                    productnum -= 1
+                    productsum.text = "total "+productnum.toString()+ " product"
+                    allprice.text = "total price: "+ dec.toString()
+                    if(myDataset[Position].calories?.size == 1){
+                        totalcal1 -= myDataset[Position].calories?.get(0)!!
+                        totalcal2 -= myDataset[Position].calories?.get(0)!!
+                    } else if(myDataset[Position].calories?.size == 2) {
+                        totalcal1 -= myDataset[Position].calories?.get(0)!!
+                        totalcal2 -= myDataset[Position].calories?.get(1)!!
+                    }
+                    if(totalcal1 == 0.0 && totalcal2==0.0) {
+                        calories.text = "calories above 0"
+                    } else if(totalcal2==0.0) {
+                        calories.text = "calories above " + totalcal1
+                    } else {
+                        calories.text = "calories above " + totalcal1 + " to " + totalcal2
+                    }
                 }
-                dec = dec.subtract(BigDecimal.valueOf(Product.price))
-                productnum -= 1
-                productsum.text = "total "+productnum.toString()+ " product"
-                allprice.text = "total price: "+ dec.toString()
             })
         RecyclerViewpopular.adapter = adapter
         // Set onClickListener for orderHistoryButton
 
         // Set onClickListener for checkoutButton
         checkoutButton.setOnClickListener {
-            // Handle button click
-            //todo: clear cart and inser to history
-            //
-            //val history = db?.userDao().insertOrder()
-            Toast.makeText(requireContext(), "checkoutButton", Toast.LENGTH_LONG).show()
             val user = db?.userDao()?.findUserByUid(myuid)
-            var order = Order(uid = myuid, dateTime = Date(), list = myDataset, price = dec.toDouble())
-            db?.orderDao()?.insert(order)
-            val newhistory = db?.orderDao()?.getAllOrdersByUid(myuid) as MutableList<Order>
+            if (myDataset.size!=0){
 
-            user?.history= newhistory
-            if (user != null) {
-                user.cart = mutableListOf<Product>()
-                db?.userDao()?.updateUserInfo(user)
+                var order = Order(uid = myuid, dateTime = Date(), list = myDataset, price = dec.toDouble())
+                db?.orderDao()?.insert(order)
+                val newhistory = db?.orderDao()?.getAllOrdersByUid(myuid) as MutableList<Order>
 
-                myDataset.clear()
-                adapter.notifyDataSetChanged()
-                dec = BigDecimal.valueOf(0)
-                productnum = 0
-                productsum.text = "total "+productnum.toString()+ " product"
-                allprice.text = "total price: "+ dec.toString()
-                calories.text = "calories above 0"
+                user?.history= newhistory
+                if (user != null) {
+                    user.cart = mutableListOf<Product>()
+                    db?.userDao()?.updateUserInfo(user)
 
+                    myDataset.clear()
+                    adapter.notifyDataSetChanged()
+                    dec = BigDecimal.valueOf(0)
+                    productnum = 0
+                    productsum.text = "total "+productnum.toString()+ " product"
+                    allprice.text = "total price: "+ dec.toString()
+                    calories.text = "calories above 0"
+
+                }
             }
 
         }

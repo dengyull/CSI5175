@@ -59,9 +59,7 @@ class NotificationsFragment : Fragment() {
         val myuid = sharedPref.getInt("uid", 0)
 
         val db = context?.let { AppDatabase.getAppDatabase(it) }
-        //Toast.makeText(requireContext(), "uid"+myuid.toString(), Toast.LENGTH_LONG).show()
         var user = db?.userDao()?.findUserByUid(myuid)
-        //Toast.makeText(requireContext(), "uid"+user?.uid, Toast.LENGTH_LONG).show()
         firstName_change.setText(user?.firstName)
         lastName_change.setText(user?.lastName)
         phone_change.setText(user?.phone.toString())
@@ -97,6 +95,7 @@ class NotificationsFragment : Fragment() {
         binding.buttonSubmit.setOnClickListener {
             //todo: input type check
 
+
             firstName_change.isEnabled = !firstName_change.isEnabled
             lastName_change.isEnabled = !lastName_change.isEnabled
             phone_change.isEnabled = !phone_change.isEnabled
@@ -115,7 +114,9 @@ class NotificationsFragment : Fragment() {
                 zipcode_change.setBackgroundResource(android.R.drawable.edit_text)
                 city_change.setBackgroundResource(android.R.drawable.edit_text)
                 street_change.setBackgroundResource(android.R.drawable.edit_text)
+                binding.buttonSubmit.text = "submit"
             } else {
+                binding.buttonSubmit.text = "edit"
                 // Hide underline when the EditText view is disabled
                 val addres = Address(country_change.text.toString(),state_change.text.toString(),zipcode_change.text.toString(),city_change.text.toString(),street_change.text.toString())
 

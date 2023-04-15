@@ -83,11 +83,6 @@ class browse_container : Fragment() {
             val searchTerm = searchBar.text.toString()
             // Perform the search
         }
-        root.findViewById<Button>(R.id.button3).setOnClickListener {
-
-            showNotification()
-        }
-
         //root.findViewById<Button>(R.id.button3).isVisible = false
 
 
@@ -173,7 +168,6 @@ class browse_container : Fragment() {
 
             },
             addClick = {Product ->
-                Toast.makeText(requireContext(), "addClick", Toast.LENGTH_LONG).show()
                 val newFragment = productdetail1()
                 val bundle = Bundle()
                 bundle.putInt("pid", Product.pid)

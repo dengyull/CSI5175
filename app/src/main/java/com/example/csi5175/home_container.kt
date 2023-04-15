@@ -142,7 +142,6 @@ class home_container : Fragment() {
             object : productAdapter.OnItemClickListener{
                 override fun onItemClick(position: Product) {
                     // Handle item click
-                    Toast.makeText(requireContext(), "addClick", Toast.LENGTH_LONG).show()
                     val newFragment = productdetail1()
                     val bundle = Bundle()
                     bundle.putInt("pid", position.pid)
@@ -161,7 +160,6 @@ class home_container : Fragment() {
 
             },
             addClick = {Product ->
-                Toast.makeText(requireContext(), "addClick", Toast.LENGTH_LONG).show()
                 val newFragment = productdetail1()
                 val bundle = Bundle()
                 bundle.putInt("pid", Product.pid)

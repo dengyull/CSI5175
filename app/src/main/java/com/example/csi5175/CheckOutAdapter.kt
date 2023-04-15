@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.csi5175.backend.model.Product
 
@@ -49,13 +50,13 @@ class CheckOutAdapter(private val myDataset: List<Product>,
         }
         holder.decrease.setOnClickListener {
             if(holder.PNumber.text.toString().toInt()>0){
-
-
                 minusClick(myDataset[position],position)
                 notifyDataSetChanged()
             }
 
         }
+        val imageId = myDataset[position].image
+        holder.imageView.setImageDrawable(ContextCompat.getDrawable(appContext, imageId!!))
         holder.PNumber.setText( myDataset[position].quantity.toString())
         holder.textView_product_name.text = myDataset[position].pname
         holder.textView_product_price.text = myDataset[position].price.toString()

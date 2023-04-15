@@ -55,7 +55,6 @@ class orderhistories : Fragment() {
         val uid = sharedPref.getInt("uid", 0)
         if (db != null) {
             var user = db.userDao().findUserByUid(uid)
-            Toast.makeText(requireContext(), "uid"+uid, Toast.LENGTH_LONG).show()
             if(user.history!= null){
                 orderhisto = user.history!!
 

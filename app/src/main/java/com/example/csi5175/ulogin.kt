@@ -41,7 +41,6 @@ class ulogin : AppCompatActivity() {
         if(uid != null){
             var sharedPref : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             sharedPref.edit().putInt("uid", uid).apply()
-            Toast.makeText(applicationContext, "uid"+user?.firstName, Toast.LENGTH_LONG).show()
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
             finish()
