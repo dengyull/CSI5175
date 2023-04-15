@@ -1,31 +1,13 @@
-package com.example.csi5175
+package com.example.csi5175.ui.browse
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.speech.RecognizerIntent
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.csi5175.backend.model.Product
-import com.example.csi5175.backend.persistence.AppDatabase
+import com.example.csi5175.BrowseViewModel
 import com.example.csi5175.databinding.FragmentBrowseBinding
-import com.example.csi5175.databinding.FragmentHomeBinding
-import com.example.csi5175.databinding.FragmentNotificationsBinding
-import com.example.csi5175.ui.notifications.NotificationsViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/browse_container"
-        android:name="com.example.csi5175.browse_container"
+        android:name="com.example.csi5175.ui.browse.browse_container"
         android:label="fragment_browse_container"
         tools:layout="@layout/fragment_browse_container" />
 </navigation>

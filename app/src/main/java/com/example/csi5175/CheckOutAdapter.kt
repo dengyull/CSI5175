@@ -41,9 +41,6 @@ class CheckOutAdapter(private val myDataset: List<Product>,
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // myDataset[position].image?.planes
-        // todo: image insert
-        // holder.imageView.setImageBitmap(myDataset[position].image?.planes)
         holder.increase.setOnClickListener {
             plusClick(myDataset[position],position)
             notifyDataSetChanged()

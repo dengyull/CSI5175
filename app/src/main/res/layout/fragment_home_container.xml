@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home_container">
+    tools:context=".ui.home.home_container">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -115,10 +115,6 @@
 
         </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical"></LinearLayout>
 
     </LinearLayout>
 </FrameLayout>

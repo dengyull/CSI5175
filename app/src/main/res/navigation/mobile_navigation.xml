@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_browse"
-        android:name="com.example.csi5175.browse"
+        android:name="com.example.csi5175.ui.browse.browse"
         android:label="fragment_browse"
         tools:layout="@layout/fragment_browse" >
         <action
@@ -133,6 +133,10 @@
         android:id="@+id/productdetail1"
         android:name="com.example.csi5175.productdetail1"
         android:label="fragment_productdetail1"
-        tools:layout="@layout/fragment_productdetail1" />
+        tools:layout="@layout/fragment_productdetail1" >
+        <action
+            android:id="@+id/action_productdetail1_to_navigation_browse"
+            app:destination="@id/navigation_browse" />
+    </fragment>
 
 </navigation>
